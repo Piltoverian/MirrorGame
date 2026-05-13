@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightSource : LightUltility
+public class LightSource : LightUtility
 {
     [SerializeField] int lightsourceindex;
     [SerializeField] float LightLuminosity; 
@@ -12,13 +12,11 @@ public class LightSource : LightUltility
         //find the first missing positive number in LightSoureceIndex
         List<LightSource> lightSources = new List<LightSource>(FindObjectsByType<LightSource>(FindObjectsSortMode.None));
         List<int> lightSourceIndices = new List<int>(lightSources.Count);
-        Debug.Log("LightSources count: " + lightSources.Count);
         for (int i = 0; i < lightSources.Count; i++)
         {
             lightSourceIndices.Add(lightSources[i].lightsourceindex);
         }
-        lightSourceIndices.Sort();
-        Debug.Log("LightSourceIndices: " + string.Join(", ", lightSourceIndices));  
+        lightSourceIndices.Sort(); 
         for (int i = 0; i < lightSourceIndices.Count; i++)
         {
             if (lightSourceIndices[i]-1 != i)
@@ -41,6 +39,11 @@ public class LightSource : LightUltility
     }
 
     public override void OnLightHit(LightRayData lightRayData)
+    {
+        
+    }
+
+    public override void OnLightGraphClear()
     {
         
     }

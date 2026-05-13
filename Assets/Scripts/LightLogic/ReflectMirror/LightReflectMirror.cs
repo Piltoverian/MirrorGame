@@ -1,14 +1,12 @@
 using UnityEngine;
 
-public class LightReflectMirror : LightUltility
+public class LightReflectMirror : LightUtility
 {
     public override void OnLightHit(LightRayData lightRayData)
     {
-        Debug.Log("Normal" + transform.up);
         Debug.DrawLine(transform.position, transform.position + transform.up, Color.green, 2f);
         Debug.DrawLine((Vector3)lightRayData.hitpos,(Vector3)lightRayData.hitpos+CalculateReflectDir(lightRayData),Color.beige,2f);
-        Debug.Log("Hit pos: " + lightRayData.hitpos);
-        var lightdata=LightRayHelper.LightEmit(this, CalculateReflectDir(lightRayData), lightRayData.lightdiagramindex, lightRayData.lightluminosity,lightRayData.hitpos);
+        var lightdata=LightRayHelper.LightEmit(gameObject, CalculateReflectDir(lightRayData), lightRayData.lightdiagramindex, lightRayData.lightluminosity,lightRayData.hitpos);
         if (lightdata != null)
         {
             LightRendererPipeLine lightRendererPipeLine = FindAnyObjectByType<LightRendererPipeLine>();
@@ -37,5 +35,10 @@ public class LightReflectMirror : LightUltility
         // Calculate the reflection direction using the formula: R = D - 2 * (D . N) * N
         Vector3 normal = transform.up;
         return incomingRay.raydir - 2 * Vector3.Dot(incomingRay.raydir, normal) * normal;
+    }
+
+    public override void OnLightGraphClear()
+    {
+        
     }
 }

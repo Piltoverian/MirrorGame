@@ -4,6 +4,8 @@ using UnityEditor.Playables;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
+
+[System.Serializable]
 public class LightRayData//use this to store the data of a light ray used to caculate the the merge of light ray and redraw later
 {
     public Collider2D hitCollider;//use for graph logic
@@ -28,7 +30,7 @@ public class LightRayData//use this to store the data of a light ray used to cac
 
 public static class LightRayHelper
 {
-    public static LightRayData LightEmit(LightUltility ultility, Vector3 lightDir, List<int> lightsourceindex, float LightLuminosity,Vector3 emitpoint)
+    public static LightRayData LightEmit(GameObject ultility, Vector3 lightDir, List<int> lightsourceindex, float LightLuminosity,Vector3 emitpoint)
     {
         LightRayData lightRayData = new LightRayData();
         lightRayData.emitpos = emitpoint;
@@ -36,7 +38,6 @@ public static class LightRayHelper
         lightRayData.lightdiagramindex.AddRange(lightsourceindex);
         lightRayData.lightluminosity = LightLuminosity;
         lightRayData.raydir = lightDir;
-
         Ray2D ray = new Ray2D(emitpoint, lightDir);
         RaycastHit2D raycastHit2D;
         raycastHit2D = Physics2D.Raycast(ray.origin, ray.direction, 100f);
@@ -46,21 +47,30 @@ public static class LightRayHelper
             {
                 return null;
             }
-            Debug.Log("Light ray hit: " + raycastHit2D.collider.gameObject.name);
             lightRayData.hitpos = raycastHit2D.point + raycastHit2D.normal* 0.0001f;
             lightRayData.hitCollider = raycastHit2D.collider;
-            lightRayData.hitCollider.gameObject.TryGetComponent(out LightUltility hitLightUltility);
-             if (hitLightUltility != null)
-             {
-                 hitLightUltility.OnLightHit(lightRayData);
-             }
+            lightRayData.hitCollider.gameObject.TryGetComponent(out LightUtility hitLightUltility);
+            if (hitLightUltility != null)
+            {
+                hitLightUltility.OnLightHit(lightRayData);
+            }
+            else
+            {
+                //hit so block light
+                lightRayData.hitCollider=raycastHit2D.collider;
+                lightRayData.hitpos = raycastHit2D.point + raycastHit2D.normal* 0.0001f;
+            }
         }
         else
         {
-            Debug.Log("Light ray did not hit any collider.");
             lightRayData.hitpos = emitpoint + lightDir * 100f;
             lightRayData.hitCollider = null;
         }
         return lightRayData;
+    }
+
+    public static LightRayData LightEmit(LightRayData lightRayData)
+    {
+        return LightEmit(lightRayData.emitObject, lightRayData.raydir, lightRayData.lightdiagramindex, lightRayData.lightluminosity, lightRayData.emitpos);
     }
 }
