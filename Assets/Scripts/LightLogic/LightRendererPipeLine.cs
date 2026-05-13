@@ -4,28 +4,27 @@ using UnityEngine;
 
 public class LightRendererPipeLine : MonoBehaviour
 {
+    List<LightRayData> lightTotalGraph = new List<LightRayData>();
     public List<LightRayData> LightCalculatePhase()
     {
-        List<LightRayData> lightRayDataList = new List<LightRayData>();
+        lightTotalGraph.Clear();
         // Perform light calculation logic here
         var lightSources = FindObjectsByType<LightSource>(FindObjectsSortMode.None);
 
         foreach (var lightSource in lightSources)
         {
-            var lightRayData = lightSource.LightEmit();
-            lightRayDataList.Add(lightRayData);
+            var lightindexlist= new List<int>();
+            lightindexlist.Add(lightSource.GetLightSourceIndex());
+            var lightRayData = LightRayHelper.LightEmit(lightSource, lightSource.transform.right,lightindexlist, lightSource.GetLightLuminosity(),lightSource.transform.position);
+            lightTotalGraph.Add(lightRayData);
         }
-
-        return lightRayDataList;
+        
+        return lightTotalGraph;
     }
 
     public void LightRenderPhase(List<LightRayData> lightRayDataList)
     {
         Debug.Log("LightRenderPhase: " + lightRayDataList.Count + " light rays to render.");
-        for (int i = 0; i < lightRayDataList.Count; i++)
-        {
-            Debug.Log($"LightRayData {i}: EmitPos={lightRayDataList[i].emitpos}, HitPos={lightRayDataList[i].hitpos}, Luminosity={lightRayDataList[i].lightluminosity}");
-        }
         // Perform light rendering logic here using the calculated light ray data
         foreach (var lightRayData in lightRayDataList)
         {
@@ -34,10 +33,21 @@ public class LightRendererPipeLine : MonoBehaviour
         }
     }
 
+    public void AddAnEdgeToLightGraph(LightRayData lightRayData)
+    {
+        lightTotalGraph.Add(lightRayData);
+        Debug.Log("Added a new edge to the light graph. Total edges: " + lightTotalGraph.Count);
+    }   
+
+
     public void Update()
     {
-        LightRendererPipeLine lightRendererPipeLine = FindAnyObjectByType<LightRendererPipeLine>();
-        List<LightRayData> lightRayDataList = lightRendererPipeLine.LightCalculatePhase();
-        lightRendererPipeLine.LightRenderPhase(lightRayDataList);
+        LightCalculatePhase();
+        
+    }
+
+    public void LateUpdate()
+    {
+        LightRenderPhase(lightTotalGraph);
     }
 }

@@ -1,31 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightSource : MonoBehaviour
+public class LightSource : LightUltility
 {
     [SerializeField] int lightsourceindex;
     [SerializeField] float LightLuminosity; 
-    public LightRayData LightEmit()
-    {
-        LightRayData lightRayData = new LightRayData();
-        lightRayData.emitpos = transform.position;
-        lightRayData.emitObject = gameObject;
-        lightRayData.lightdiagramindex.Add(lightsourceindex);
-        lightRayData.lightluminosity = LightLuminosity;
-        
-        Ray ray = new Ray(transform.position, transform.right);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, LayerMask.NameToLayer("LightAbsorb")))
-        {
-            lightRayData.hitpos = hit.point;
-            lightRayData.hitObject = hit.collider.gameObject;
-        }
-        else
-        {
-            lightRayData.hitpos = transform.position + transform.right * 100f;
-            lightRayData.hitObject = null;
-        }
-        return lightRayData;
-    }
+    
 
     private void OnValidate()
     {
@@ -48,5 +28,20 @@ public class LightSource : MonoBehaviour
             }
         }
         lightsourceindex = lightSourceIndices.Count+1;    
+    }
+
+    public int GetLightSourceIndex()
+    {
+        return lightsourceindex;
+    }
+
+    public float GetLightLuminosity()
+    {
+        return LightLuminosity;
+    }
+
+    public override void OnLightHit(LightRayData lightRayData)
+    {
+        
     }
 }
