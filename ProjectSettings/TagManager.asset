@@ -11,7 +11,7 @@ TagManager:
   - LightUltility
   - Water
   - UI
-  - 
+  - Light
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Light
+    uniqueID: 3043283731
     locked: 0
   m_RenderingLayers:
   - Default

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class LightRendererPipeLine : MonoBehaviour
 {
+    [SerializeField] GameObject lightRayPrefab;
     [SerializeField]List<LightRayData> lightTotalGraph = new List<LightRayData>();
+    private List<GameObject> lightActiveRayGameObjects = new List<GameObject>();
+    private List<GameObject> lightRayGameObjectsPool = new List<GameObject>();
     public List<LightRayData> LightCalculatePhase()
     {
         lightTotalGraph.Clear();
@@ -26,8 +29,26 @@ public class LightRendererPipeLine : MonoBehaviour
         // Perform light rendering logic here using the calculated light ray data
         foreach (var lightRayData in lightRayDataList)
         {
-            // Example: Draw a line representing the light ray
-           Debug.DrawLine(lightRayData.emitpos, lightRayData.hitpos, Color.yellow);
+           GameObject lightRayGameObject;
+            if (lightRayGameObjectsPool.Count > 0)
+            {
+                lightRayGameObject = lightRayGameObjectsPool[0];
+                lightRayGameObjectsPool.RemoveAt(0);
+                lightRayGameObject.SetActive(true);
+            }
+            else
+            {
+                lightRayGameObject = Instantiate(lightRayPrefab);
+            }
+            if (lightRayGameObject.TryGetComponent(out LineRenderer lineRenderer))
+            {
+                lineRenderer.SetPositions(new Vector3[] { lightRayData.hitpos , lightRayData.emitpos });
+                lightActiveRayGameObjects.Add(lightRayGameObject);
+            }
+            else
+            {
+                Debug.LogError("LightRayPrefab does not have a LineRenderer component.");
+            }
         }
     }
 
@@ -69,6 +90,12 @@ public class LightRendererPipeLine : MonoBehaviour
         {
             lightUtilities[i].OnLightGraphClear();
         }   
+        for (int i = 0; i < lightActiveRayGameObjects.Count; i++)
+        {
+            lightActiveRayGameObjects[i].SetActive(false);
+            lightRayGameObjectsPool.Add(lightActiveRayGameObjects[i]);
+            lightActiveRayGameObjects.RemoveAt(i);
+        }
         lightTotalGraph.Clear();
     }
 

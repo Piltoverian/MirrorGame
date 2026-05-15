@@ -4,8 +4,6 @@ public class LightReflectMirror : LightUtility
 {
     public override void OnLightHit(LightRayData lightRayData)
     {
-        Debug.DrawLine(transform.position, transform.position + transform.up, Color.green, 2f);
-        Debug.DrawLine((Vector3)lightRayData.hitpos,(Vector3)lightRayData.hitpos+CalculateReflectDir(lightRayData),Color.beige,2f);
         var lightdata=LightRayHelper.LightEmit(gameObject, CalculateReflectDir(lightRayData), lightRayData.lightdiagramindex, lightRayData.lightluminosity,lightRayData.hitpos);
         if (lightdata != null)
         {
