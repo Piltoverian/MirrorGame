@@ -8,6 +8,9 @@ public class LightMerger : LightUtility
     [SerializeField] private LightRayData currentRayData;
     private List<LightRayData> hit = new List<LightRayData>();
 
+    private bool hasFrontHit = false;
+    private bool hasBackHit = false;
+
     public void Awake()
     {
         ClearRayData();
@@ -31,8 +34,9 @@ public class LightMerger : LightUtility
 
     public override void OnLightHit(LightRayData lightRayData)
     {
-      for(int i = 0; i < lightRayData.lightdiagramindex.Count; i++)
-      {
+
+        for(int i = 0; i < lightRayData.lightdiagramindex.Count; i++)
+        {
             if (!currentRayData.lightdiagramindex.Contains(lightRayData.lightdiagramindex[i]))
             {
                 currentRayData.lightdiagramindex.Add(lightRayData.lightdiagramindex[i]);

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class LightSource : LightUtility
 {
-    [SerializeField] int lightsourceindex;
-    [SerializeField] float LightLuminosity; 
+    [SerializeField] int lightSourceIndex;
+    [SerializeField] float lightLuminosity; 
     
 
     private void OnValidate()
@@ -14,28 +14,28 @@ public class LightSource : LightUtility
         List<int> lightSourceIndices = new List<int>(lightSources.Count);
         for (int i = 0; i < lightSources.Count; i++)
         {
-            lightSourceIndices.Add(lightSources[i].lightsourceindex);
+            lightSourceIndices.Add(lightSources[i].lightSourceIndex);
         }
         lightSourceIndices.Sort(); 
         for (int i = 0; i < lightSourceIndices.Count; i++)
         {
             if (lightSourceIndices[i]-1 != i)
             {
-                lightsourceindex = i+1;
+                lightSourceIndex = i+1;
                 return;
             }
         }
-        lightsourceindex = lightSourceIndices.Count+1;    
+        lightSourceIndex = lightSourceIndices.Count+1;    
     }
 
     public int GetLightSourceIndex()
     {
-        return lightsourceindex;
+        return lightSourceIndex;
     }
 
     public float GetLightLuminosity()
     {
-        return LightLuminosity;
+        return lightLuminosity;
     }
 
     public override void OnLightHit(LightRayData lightRayData)
