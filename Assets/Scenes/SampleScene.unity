@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 163359862}
   - component: {fileID: 163359861}
   - component: {fileID: 163359860}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,13 +369,13 @@ GameObject:
   m_Component:
   - component: {fileID: 314225320}
   - component: {fileID: 314225319}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &314225319
 BoxCollider2D:
   m_ObjectHideFlags: 0
