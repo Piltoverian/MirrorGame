@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4600229847921155532}
   - component: {fileID: 7746128696501621648}
   - component: {fileID: 4487778196855223111}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LightSpliter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LightSplitter
   lightoutput: {fileID: 3683635925583912571}
   splitAngle: 30
+  hit: []
 --- !u!1 &3683635925583912571
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 783592758438559009}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LightOutPut
   m_TagString: Untagged
   m_Icon: {fileID: 0}

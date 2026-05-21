@@ -41,7 +41,7 @@ public class LightRendererPipeLine : MonoBehaviour
                 lightRayGameObject = Instantiate(lightRayPrefab);
             }
             if (lightRayGameObject.TryGetComponent(out LineRenderer lineRenderer))
-            {
+            { 
                 lineRenderer.SetPositions(new Vector3[] { lightRayData.hitpos , lightRayData.emitpos });
                 lightActiveRayGameObjects.Add(lightRayGameObject);
             }

@@ -40,13 +40,9 @@ public static class LightRayHelper
         lightRayData.raydir = lightDir;
         Ray2D ray = new Ray2D(emitpoint, lightDir);
         RaycastHit2D raycastHit2D;
-        raycastHit2D = Physics2D.Raycast(ray.origin, ray.direction, 100f,LayerMask.NameToLayer("LightUtility"));
+        raycastHit2D = Physics2D.Raycast(ray.origin, ray.direction, 100f,1<<7);
         if (raycastHit2D)
         {
-            if (raycastHit2D.collider.gameObject == ultility.gameObject)
-            {
-                return null;
-            }
             lightRayData.hitpos = raycastHit2D.point + raycastHit2D.normal* 0.0001f;
             lightRayData.hitCollider = raycastHit2D.collider;
             lightRayData.hitCollider.gameObject.TryGetComponent(out LightUtility hitLightUltility);
