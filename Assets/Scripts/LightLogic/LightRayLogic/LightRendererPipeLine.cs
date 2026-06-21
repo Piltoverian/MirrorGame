@@ -95,6 +95,7 @@ public class LightRendererPipeLine : MonoBehaviour
             lightActiveRayGameObjects[i].SetActive(false);
             lightRayGameObjectsPool.Add(lightActiveRayGameObjects[i]);
             lightActiveRayGameObjects.RemoveAt(i);
+            i -= 1;
         }
         lightTotalGraph.Clear();
     }
