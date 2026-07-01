@@ -2507,8 +2507,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1346761057
-  m_SortingLayer: 1
+  m_SortingLayerID: 482074859
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
@@ -4709,7 +4709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d117ec75d86ac141911f7f8c331bc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightSource
-  lightSourceIndex: 1
+  lightSourceIndex: 2
   lightLuminosity: 10
 --- !u!4 &1708024648
 Transform:
