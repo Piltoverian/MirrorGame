@@ -12,7 +12,6 @@ public class MirrorPushZone : MonoBehaviour
     private void Awake()
     {
         parentMirror = GetComponentInParent<PushableMirror>();
-
         if (faceRenderer != null)
         {
             normalColor = faceRenderer.color;
@@ -26,8 +25,14 @@ public class MirrorPushZone : MonoBehaviour
 
     public void Highlight(bool isHighlighted)
     {
-        if (faceRenderer == null) return;
+        if (faceRenderer != null)
+        {
+            faceRenderer.color = isHighlighted ? highlightColor : normalColor;
+        }
 
-        faceRenderer.color = isHighlighted ? highlightColor : normalColor;
+        if (parentMirror != null)
+        {
+            parentMirror.ShowWarning(isHighlighted);
+        }
     }
 }
