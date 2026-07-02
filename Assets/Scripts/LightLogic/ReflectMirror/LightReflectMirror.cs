@@ -18,7 +18,6 @@ public class LightReflectMirror : LightUtility
 
     public override void OnLightHit(LightRayData lightRayData)
     {
-        lightRayData.hitpos = transform.position;
 
         if (Vector3.Dot(lightRayData.raydir, transform.up) > 0.01f)
         {
@@ -26,7 +25,8 @@ public class LightReflectMirror : LightUtility
         }
 
         Vector3 reflectDir = CalculateReflectDir(lightRayData);
-        Vector2 reflectPos = transform.position;
+
+        Vector2 reflectPos = lightRayData.hitpos;
 
         int sameRayCount = 0;
         for (int i = 0; i < currentEmittedRays.Count; i++)
