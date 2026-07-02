@@ -38,17 +38,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Light
+    uniqueID: 3800283499
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Player
     uniqueID: 3593365949
-    locked: 0
-  - name: Light
-    uniqueID: 3043283731
-    locked: 0
-  - name: Light
-    uniqueID: 3800283499
     locked: 0
   m_RenderingLayers:
   - Default

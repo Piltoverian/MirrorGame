@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a0791f435375fd4383e9ce5ff5d6a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightReceiver
-  lumosityToOpen: 10
+  lumosityToOpen: 1
 --- !u!61 &9168642851380421496
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -349,3 +349,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fe1f34732245248bb5909dc566743b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorLuminosityDisplay
+  openedColor: {r: 0.24674559, g: 1, b: 0, a: 1}
+  closedColor: {r: 1, g: 1, b: 1, a: 1}
