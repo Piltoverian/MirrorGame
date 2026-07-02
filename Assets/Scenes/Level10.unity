@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d117ec75d86ac141911f7f8c331bc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightSource
-  lightSourceIndex: 1
+  lightSourceIndex: 3
   lightLuminosity: 2
 --- !u!1 &88301978
 GameObject:
@@ -650,7 +650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: -1, y: 0}
   faceRenderer: {fileID: 105252344}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &105252344
@@ -703,7 +702,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -935,7 +934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 1, y: 0}
   faceRenderer: {fileID: 155643032}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &155643032
@@ -988,7 +986,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1500,6 +1498,7 @@ GameObject:
   - component: {fileID: 518219466}
   - component: {fileID: 518219465}
   - component: {fileID: 518219464}
+  - component: {fileID: 518219467}
   m_Layer: 10
   m_Name: ReflectMirror (2)
   m_TagString: Untagged
@@ -1516,7 +1515,7 @@ Transform:
   m_GameObject: {fileID: 518219462}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -4.82, y: -7.67, z: 0}
+  m_LocalPosition: {x: -4.3518, y: -7.67197, z: 0}
   m_LocalScale: {x: 1, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1588,8 +1587,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea95f1f754c107f408eb56b397d6bd92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
+  isPushable: 1
   gridCellsX: 1
   mirrorThickness: 0.15
+  renderersToTint:
+  - {fileID: 518219466}
+  - {fileID: 2085158637}
+  - {fileID: 847994196}
+  - {fileID: 573032950}
+  - {fileID: 593690971}
+  notPushableBrightness: 0.45
+  mirrorMass: 8
+  linearDamping: 8
+  maxPushSpeed: 1.6
+  mirrorSign: 22.5
+  snapToGridOnStart: 1
+  snapToGridWhenStopped: 0
+  stoppedVelocityThreshold: 0.03
+  snapDelay: 0.2
 --- !u!212 &518219466
 SpriteRenderer:
   serializedVersion: 2
@@ -1649,6 +1664,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!50 &518219467
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518219462}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &525629088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1741,7 +1783,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: -1}
   faceRenderer: {fileID: 525629092}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &525629092
@@ -1794,7 +1835,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1948,7 +1989,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: 1}
   faceRenderer: {fileID: 538434679}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &538434679
@@ -2001,7 +2041,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2401,7 +2441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: -1}
   faceRenderer: {fileID: 573032950}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &573032950
@@ -2454,7 +2493,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2633,7 +2672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: 1}
   faceRenderer: {fileID: 593690971}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &593690971
@@ -2686,7 +2724,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2801,6 +2839,7 @@ GameObject:
   - component: {fileID: 613506311}
   - component: {fileID: 613506310}
   - component: {fileID: 613506309}
+  - component: {fileID: 613506312}
   m_Layer: 10
   m_Name: ReflectMirror (5)
   m_TagString: Untagged
@@ -2817,7 +2856,7 @@ Transform:
   m_GameObject: {fileID: 613506307}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1.18, y: 2.33, z: 0}
+  m_LocalPosition: {x: 1.6482, y: 2.32803, z: 0}
   m_LocalScale: {x: 1, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2889,8 +2928,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea95f1f754c107f408eb56b397d6bd92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
+  isPushable: 1
   gridCellsX: 1
   mirrorThickness: 0.15
+  renderersToTint:
+  - {fileID: 613506311}
+  - {fileID: 1274461386}
+  - {fileID: 661174437}
+  - {fileID: 942760853}
+  - {fileID: 1148781146}
+  notPushableBrightness: 0.45
+  mirrorMass: 8
+  linearDamping: 8
+  maxPushSpeed: 1.6
+  mirrorSign: 22.5
+  snapToGridOnStart: 1
+  snapToGridWhenStopped: 0
+  stoppedVelocityThreshold: 0.03
+  snapDelay: 0.2
 --- !u!212 &613506311
 SpriteRenderer:
   serializedVersion: 2
@@ -2950,6 +3005,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!50 &613506312
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613506307}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &614812263
 GameObject:
   m_ObjectHideFlags: 0
@@ -3042,7 +3124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: -1}
   faceRenderer: {fileID: 614812267}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &614812267
@@ -3095,7 +3176,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3306,7 +3387,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: -1, y: 0}
   faceRenderer: {fileID: 661174437}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &661174437
@@ -3359,7 +3439,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3460,7 +3540,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: -1, y: 0}
   faceRenderer: {fileID: 663868452}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &663868452
@@ -3513,7 +3592,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3522,11 +3601,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!4 &705960852 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2763528027855734155, guid: bf66b827cd92a81469460e20df5c1dee, type: 3}
-  m_PrefabInstance: {fileID: 1944766219}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &717383054
 GameObject:
   m_ObjectHideFlags: 0
@@ -3757,7 +3831,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 1, y: 0}
   faceRenderer: {fileID: 718280718}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &718280718
@@ -3810,7 +3883,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3911,7 +3984,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 1, y: 0}
   faceRenderer: {fileID: 727095510}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &727095510
@@ -3964,7 +4036,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4143,7 +4215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: 1}
   faceRenderer: {fileID: 755057227}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &755057227
@@ -4196,7 +4267,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4341,7 +4412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: -1, y: 0}
   faceRenderer: {fileID: 780537494}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &780537494
@@ -4394,7 +4464,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4573,7 +4643,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: -1, y: 0}
   faceRenderer: {fileID: 847994196}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &847994196
@@ -4626,7 +4695,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4821,7 +4890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: 1}
   faceRenderer: {fileID: 903898616}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &903898616
@@ -4874,7 +4942,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5066,7 +5134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: -1}
   faceRenderer: {fileID: 942760853}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &942760853
@@ -5119,7 +5186,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5140,6 +5207,7 @@ GameObject:
   - component: {fileID: 960671509}
   - component: {fileID: 960671508}
   - component: {fileID: 960671507}
+  - component: {fileID: 960671510}
   m_Layer: 10
   m_Name: ReflectMirror (1)
   m_TagString: Untagged
@@ -5228,8 +5296,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea95f1f754c107f408eb56b397d6bd92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
+  isPushable: 1
   gridCellsX: 1
   mirrorThickness: 0.15
+  renderersToTint:
+  - {fileID: 960671509}
+  - {fileID: 1131908996}
+  - {fileID: 2103297523}
+  - {fileID: 525629092}
+  - {fileID: 538434679}
+  notPushableBrightness: 0.45
+  mirrorMass: 8
+  linearDamping: 8
+  maxPushSpeed: 1.6
+  mirrorSign: 22.5
+  snapToGridOnStart: 1
+  snapToGridWhenStopped: 0
+  stoppedVelocityThreshold: 0.03
+  snapDelay: 0.2
 --- !u!212 &960671509
 SpriteRenderer:
   serializedVersion: 2
@@ -5289,6 +5373,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!50 &960671510
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960671505}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &979319097
 GameObject:
   m_ObjectHideFlags: 0
@@ -5713,7 +5824,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: -1}
   faceRenderer: {fileID: 997220965}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &997220965
@@ -5766,7 +5876,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6267,7 +6377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: -1}
   faceRenderer: {fileID: 1045994534}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &1045994534
@@ -6320,7 +6429,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6341,6 +6450,7 @@ GameObject:
   - component: {fileID: 1048729954}
   - component: {fileID: 1048729953}
   - component: {fileID: 1048729952}
+  - component: {fileID: 1048729955}
   m_Layer: 10
   m_Name: ReflectMirror
   m_TagString: Untagged
@@ -6429,8 +6539,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea95f1f754c107f408eb56b397d6bd92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
+  isPushable: 1
   gridCellsX: 1
   mirrorThickness: 0.15
+  renderersToTint:
+  - {fileID: 1048729954}
+  - {fileID: 718280718}
+  - {fileID: 105252344}
+  - {fileID: 614812267}
+  - {fileID: 1572568658}
+  notPushableBrightness: 0.45
+  mirrorMass: 8
+  linearDamping: 8
+  maxPushSpeed: 1.6
+  mirrorSign: 22.5
+  snapToGridOnStart: 1
+  snapToGridWhenStopped: 0
+  stoppedVelocityThreshold: 0.03
+  snapDelay: 0.2
 --- !u!212 &1048729954
 SpriteRenderer:
   serializedVersion: 2
@@ -6490,6 +6616,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!50 &1048729955
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048729950}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1100787210
 GameObject:
   m_ObjectHideFlags: 0
@@ -6767,7 +6920,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 1, y: 0}
   faceRenderer: {fileID: 1131908996}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &1131908996
@@ -6820,7 +6972,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6921,7 +7073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: 1}
   faceRenderer: {fileID: 1148781146}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &1148781146
@@ -6974,7 +7125,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6995,6 +7146,7 @@ GameObject:
   - component: {fileID: 1164255980}
   - component: {fileID: 1164255979}
   - component: {fileID: 1164255978}
+  - component: {fileID: 1164255981}
   m_Layer: 10
   m_Name: ReflectMirror (4)
   m_TagString: Untagged
@@ -7011,7 +7163,7 @@ Transform:
   m_GameObject: {fileID: 1164255976}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 10.2, y: 3.33, z: 0}
+  m_LocalPosition: {x: 10.6482, y: 3.32803, z: 0}
   m_LocalScale: {x: 1, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7083,8 +7235,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea95f1f754c107f408eb56b397d6bd92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
+  isPushable: 1
   gridCellsX: 1
   mirrorThickness: 0.15
+  renderersToTint:
+  - {fileID: 1164255980}
+  - {fileID: 727095510}
+  - {fileID: 780537494}
+  - {fileID: 997220965}
+  - {fileID: 903898616}
+  notPushableBrightness: 0.45
+  mirrorMass: 8
+  linearDamping: 8
+  maxPushSpeed: 1.6
+  mirrorSign: 22.5
+  snapToGridOnStart: 1
+  snapToGridWhenStopped: 0
+  stoppedVelocityThreshold: 0.03
+  snapDelay: 0.2
 --- !u!212 &1164255980
 SpriteRenderer:
   serializedVersion: 2
@@ -7144,6 +7312,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!50 &1164255981
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164255976}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1192898958
 GameObject:
   m_ObjectHideFlags: 0
@@ -7600,7 +7795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 1, y: 0}
   faceRenderer: {fileID: 1274461386}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &1274461386
@@ -7653,7 +7847,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -8241,7 +8435,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 0, y: 1}
   faceRenderer: {fileID: 1572568658}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &1572568658
@@ -8294,7 +8487,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -8349,8 +8542,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d117ec75d86ac141911f7f8c331bc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightSource
-  lightSourceIndex: 3
-  lightLuminosity: 0.5
+  lightSourceIndex: 1
+  lightLuminosity: 1
 --- !u!1 &1640020908
 GameObject:
   m_ObjectHideFlags: 0
@@ -8579,8 +8772,6 @@ GameObject:
   - component: {fileID: 1664179377}
   - component: {fileID: 1664179376}
   - component: {fileID: 1664179375}
-  - component: {fileID: 1664179374}
-  - component: {fileID: 1664179373}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8588,32 +8779,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1664179373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1664179372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae03bd398b9c00149aed7f815db4ceb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Confiner
-  confiningCollider: {fileID: 1711472793}
---- !u!114 &1664179374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1664179372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b601d187a9a0e7b4aab668b89739a467, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tracking
-  target: {fileID: 705960852}
 --- !u!114 &1664179375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8701,7 +8866,7 @@ Camera:
   far clip plane: 100
   field of view: 34
   orthographic: 1
-  orthographic size: 4.96
+  orthographic size: 9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8726,13 +8891,13 @@ Transform:
   m_GameObject: {fileID: 1664179372}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000008800916, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.059253216, y: 0.12046051, z: -10}
+  m_LocalPosition: {x: 1.1687641, y: -4.024238, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1927430969}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.001, y: 0, z: 0}
 --- !u!1 &1707362702
 GameObject:
   m_ObjectHideFlags: 0
@@ -9819,6 +9984,7 @@ GameObject:
   - component: {fileID: 2044262809}
   - component: {fileID: 2044262808}
   - component: {fileID: 2044262807}
+  - component: {fileID: 2044262810}
   m_Layer: 10
   m_Name: ReflectMirror (3)
   m_TagString: Untagged
@@ -9835,7 +10001,7 @@ Transform:
   m_GameObject: {fileID: 2044262805}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.54, y: 3.32803, z: 0}
+  m_LocalPosition: {x: 2.6482, y: 3.32803, z: 0}
   m_LocalScale: {x: 1, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9907,8 +10073,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea95f1f754c107f408eb56b397d6bd92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
+  isPushable: 1
   gridCellsX: 1
   mirrorThickness: 0.15
+  renderersToTint:
+  - {fileID: 2044262809}
+  - {fileID: 155643032}
+  - {fileID: 663868452}
+  - {fileID: 1045994534}
+  - {fileID: 755057227}
+  notPushableBrightness: 0.45
+  mirrorMass: 8
+  linearDamping: 8
+  maxPushSpeed: 1.6
+  mirrorSign: 22.5
+  snapToGridOnStart: 1
+  snapToGridWhenStopped: 0
+  stoppedVelocityThreshold: 0.03
+  snapDelay: 0.2
 --- !u!212 &2044262809
 SpriteRenderer:
   serializedVersion: 2
@@ -9968,6 +10150,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!50 &2044262810
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044262805}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2085158633
 GameObject:
   m_ObjectHideFlags: 0
@@ -10060,7 +10269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: 1, y: 0}
   faceRenderer: {fileID: 2085158637}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &2085158637
@@ -10113,7 +10321,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -10214,7 +10422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da3509ce23b8df4b850d1571c5f3612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPushZone
-  pushDirection: {x: -1, y: 0}
   faceRenderer: {fileID: 2103297523}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &2103297523
@@ -10267,7 +10474,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.96863127, g: 1, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
