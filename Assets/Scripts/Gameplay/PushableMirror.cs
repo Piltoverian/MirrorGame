@@ -22,6 +22,14 @@ public class PushableMirror : MonoBehaviour
     [Header("Rotation")]
     [SerializeField] private float mirrorSign = 22.5f;
 
+    [Header("Rotation Collision Check")]
+    [Tooltip("Extra thickness, in grid cells, used only when checking if the mirror can rotate. This does not change the visual thickness or push collider.")]
+    [Min(0f)]
+    [SerializeField] private float rotationCheckThickness = 0.8f;
+    [Tooltip("Extra length, in grid cells, added only to the rotation check box. This does not change the visual length or push collider.")]
+    [Min(0f)]
+    [SerializeField] private float rotationCheckLengthPadding = 0.1f;
+
     [Header("Optional Grid Snap")]
     [SerializeField] private bool snapToGridOnStart = true;
     [SerializeField] private bool snapToGridWhenStopped = false;
@@ -295,11 +303,7 @@ public class PushableMirror : MonoBehaviour
     private bool CanRotateTo(float targetAngle)
     {
         float stepSize = GridManager.Instance != null ? GridManager.Instance.gridSize : 1f;
-
-        Vector2 boxSize = new Vector2(
-            gridCellsX * stepSize * 0.95f,
-            mirrorThickness * stepSize * 0.95f
-        );
+        Vector2 boxSize = GetRotationCheckBoxSize(stepSize);
 
         Collider2D[] allColliders = GetComponentsInChildren<Collider2D>();
 
@@ -321,6 +325,18 @@ public class PushableMirror : MonoBehaviour
         }
 
         return hit == null;
+    }
+
+    private Vector2 GetRotationCheckBoxSize(float stepSize)
+    {
+        float safeStepSize = Mathf.Max(0.0001f, stepSize);
+        float safeLengthCells = Mathf.Max(0f, gridCellsX + rotationCheckLengthPadding);
+        float safeThicknessCells = Mathf.Max(mirrorThickness, rotationCheckThickness);
+
+        return new Vector2(
+            safeLengthCells * safeStepSize * 0.95f,
+            safeThicknessCells * safeStepSize * 0.95f
+        );
     }
 
     public void Push(Vector3 direction)
@@ -396,10 +412,7 @@ public class PushableMirror : MonoBehaviour
 
         Gizmos.color = isPushable ? Color.green : Color.gray;
 
-        Vector2 boxSize = new Vector2(
-            gridCellsX * stepSize * 0.95f,
-            mirrorThickness * stepSize * 0.95f
-        );
+        Vector2 boxSize = GetRotationCheckBoxSize(stepSize);
 
         Matrix4x4 oldMatrix = Gizmos.matrix;
 

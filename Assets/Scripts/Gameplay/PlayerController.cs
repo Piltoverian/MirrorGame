@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     private PushableMirror activeMirror;
+    private PushableMirror activeRotationMirror;
+    private MirrorPushZone activeRotationZone;
 
     private void Awake()
     {
@@ -76,9 +78,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnRotate(float directionSign)
     {
-        if (activeMirror == null) return;
+        PushableMirror mirrorToRotate = activeRotationMirror != null
+            ? activeRotationMirror
+            : activeMirror;
 
-        activeMirror.Rotate(directionSign);
+        if (mirrorToRotate == null) return;
+
+        mirrorToRotate.Rotate(directionSign);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -88,6 +94,11 @@ public class PlayerController : MonoBehaviour
         if (mirror != null)
         {
             activeMirror = mirror;
+
+            if (activeRotationMirror == null)
+            {
+                activeRotationMirror = mirror;
+            }
         }
     }
 
@@ -98,6 +109,11 @@ public class PlayerController : MonoBehaviour
         if (mirror != null)
         {
             activeMirror = mirror;
+
+            if (activeRotationMirror == null)
+            {
+                activeRotationMirror = mirror;
+            }
         }
     }
 
@@ -109,5 +125,51 @@ public class PlayerController : MonoBehaviour
         {
             activeMirror = null;
         }
+
+        if (activeRotationZone == null && mirror != null && mirror == activeRotationMirror)
+        {
+            activeRotationMirror = null;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        TrySetRotationMirrorFromZone(other);
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        TrySetRotationMirrorFromZone(other);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        MirrorPushZone zone = other.GetComponentInParent<MirrorPushZone>();
+        if (zone == null) return;
+
+        zone.Highlight(false);
+
+        if (zone != activeRotationZone) return;
+
+        activeRotationZone = null;
+        activeRotationMirror = activeMirror;
+    }
+
+    private void TrySetRotationMirrorFromZone(Collider2D other)
+    {
+        MirrorPushZone zone = other.GetComponentInParent<MirrorPushZone>();
+        if (zone == null) return;
+
+        PushableMirror mirror = zone.GetMirror();
+        if (mirror == null) return;
+
+        if (activeRotationZone != null && activeRotationZone != zone)
+        {
+            activeRotationZone.Highlight(false);
+        }
+
+        activeRotationZone = zone;
+        activeRotationMirror = mirror;
+        zone.Highlight(true);
     }
 }
