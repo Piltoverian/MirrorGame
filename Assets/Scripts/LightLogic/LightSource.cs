@@ -10,7 +10,7 @@ public class LightSource : LightUtility
     private void OnValidate()
     {
         //find the first missing positive number in LightSoureceIndex
-        List<LightSource> lightSources = new List<LightSource>(FindObjectsByType<LightSource>(FindObjectsSortMode.None));
+        List<LightSource> lightSources = new List<LightSource>(FindObjectsByType<LightSource>());
         List<int> lightSourceIndices = new List<int>(lightSources.Count);
         for (int i = 0; i < lightSources.Count; i++)
         {

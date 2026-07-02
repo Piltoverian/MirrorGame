@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4044136262037058224}
   - component: {fileID: 5749672727045342355}
   - component: {fileID: 1429028055927731850}
+  - component: {fileID: 3579011475423477786}
   m_Layer: 5
   m_Name: Home
   m_TagString: Untagged
@@ -119,7 +120,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5749672727045342355}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3579011475423477786}
+        m_TargetAssemblyTypeName: ChangeSceneButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3579011475423477786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439775845164834078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa41d943786e1ae4085979d4318ce8eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChangeSceneButton
+  sceneName: Game Menu
 --- !u!1 &1690541351824712326
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,6 +158,7 @@ GameObject:
   - component: {fileID: 1212188254237803653}
   - component: {fileID: 8805302644540767199}
   - component: {fileID: 5694943255751491391}
+  - component: {fileID: 7145306341782141823}
   m_Layer: 5
   m_Name: Restart
   m_TagString: Untagged
@@ -239,7 +266,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8805302644540767199}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7145306341782141823}
+        m_TargetAssemblyTypeName: RestartButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7145306341782141823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690541351824712326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648073f56ff307b428782b607b14d959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RestartButton
 --- !u!1 &1711208904345109176
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,6 +379,7 @@ GameObject:
   - component: {fileID: 839826133529741771}
   - component: {fileID: 5872231590705503022}
   - component: {fileID: 4903884458833313461}
+  - component: {fileID: 9075194645245912784}
   m_Layer: 5
   m_Name: Next Level
   m_TagString: Untagged
@@ -435,7 +487,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5872231590705503022}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9075194645245912784}
+        m_TargetAssemblyTypeName: ChangeSceneButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &9075194645245912784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139722492502296194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa41d943786e1ae4085979d4318ce8eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChangeSceneButton
+  sceneName: 
 --- !u!1 &2159390257876110739
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +663,7 @@ GameObject:
   - component: {fileID: 2219599913033468381}
   - component: {fileID: 5377956924248044188}
   m_Layer: 5
-  m_Name: Next Level
+  m_Name: Hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -706,7 +783,7 @@ GameObject:
   - component: {fileID: 2087434646779163285}
   - component: {fileID: 5728021095028514367}
   m_Layer: 5
-  m_Name: Game
+  m_Name: GameFlowCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -809,6 +886,7 @@ GameObject:
   - component: {fileID: 6384256444066932969}
   - component: {fileID: 2212145507166294898}
   - component: {fileID: 6444193116339599451}
+  - component: {fileID: 2875355164111357126}
   m_Layer: 5
   m_Name: Restart
   m_TagString: Untagged
@@ -916,7 +994,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2212145507166294898}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7145306341782141823}
+        m_TargetAssemblyTypeName: RestartButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2875355164111357126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3872293423361644826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648073f56ff307b428782b607b14d959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RestartButton
 --- !u!1 &3894492203706530767
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,6 +1031,7 @@ GameObject:
   - component: {fileID: 8766034700613865509}
   - component: {fileID: 6153170283309134134}
   - component: {fileID: 6014181895421665186}
+  - component: {fileID: 5647820612618645295}
   m_Layer: 5
   m_Name: Home
   m_TagString: Untagged
@@ -1036,7 +1139,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6153170283309134134}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5647820612618645295}
+        m_TargetAssemblyTypeName: ChangeSceneButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5647820612618645295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3894492203706530767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa41d943786e1ae4085979d4318ce8eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChangeSceneButton
+  sceneName: Game Menu
 --- !u!1 &4020821194470819364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,7 +1182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &480897245170508851
 RectTransform:
   m_ObjectHideFlags: 0
