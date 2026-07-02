@@ -43,4 +43,9 @@ public class LightReceiver : LightUtility
     {
         return GetTotalLuminosity() >= lumosityToOpen;
     }
+
+    public float GetLumosityToOpen()
+    {
+        return lumosityToOpen;
+    }
 }

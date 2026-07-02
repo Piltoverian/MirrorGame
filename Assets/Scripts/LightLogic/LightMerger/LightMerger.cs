@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Embree;
 using UnityEngine;
 
 public class LightMerger : LightUtility

@@ -2,25 +2,20 @@ using UnityEngine;
 
 public class MirrorPushZone : MonoBehaviour
 {
-    public Vector2 pushDirection;
-    public SpriteRenderer faceRenderer;
+    [Header("Visual")]
+    [SerializeField] private SpriteRenderer faceRenderer;
+    [SerializeField] private Color highlightColor = Color.yellow;
 
-    private Color normalColor = new Color(1f, 1f, 1f, 0f); 
-    public Color highlightColor = Color.yellow; 
-
+    private Color normalColor;
     private PushableMirror parentMirror;
 
     private void Awake()
     {
         parentMirror = GetComponentInParent<PushableMirror>();
-        if (faceRenderer != null) normalColor = faceRenderer.color;
-    }
 
-    public void Highlight(bool isHighlighted)
-    {
         if (faceRenderer != null)
         {
-            faceRenderer.color = isHighlighted ? highlightColor : normalColor;
+            normalColor = faceRenderer.color;
         }
     }
 
@@ -28,12 +23,11 @@ public class MirrorPushZone : MonoBehaviour
     {
         return parentMirror;
     }
-    public Vector3 GetCalculatedPushDirection()
-    {
-        if (pushDirection != Vector2.zero) 
-            return new Vector3(pushDirection.x, pushDirection.y, 0f);
 
-        Vector3 dir = parentMirror.transform.position - transform.position;
-        return dir.normalized;
+    public void Highlight(bool isHighlighted)
+    {
+        if (faceRenderer == null) return;
+
+        faceRenderer.color = isHighlighted ? highlightColor : normalColor;
     }
 }
