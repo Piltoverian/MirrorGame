@@ -12,7 +12,7 @@ public class LightRendererPipeLine : MonoBehaviour
     {
         lightTotalGraph.Clear();
         // Perform light calculation logic here
-        var lightSources = FindObjectsByType<LightSource>(FindObjectsSortMode.None);
+        var lightSources = FindObjectsByType<LightSource>();
 
         foreach (var lightSource in lightSources)
         {
@@ -85,7 +85,7 @@ public class LightRendererPipeLine : MonoBehaviour
 
     private void LightGraphClear()
     {
-        var lightUtilities = FindObjectsByType<LightUtility>(FindObjectsSortMode.None);
+        var lightUtilities = FindObjectsByType<LightUtility>();
         for(int i = 0; i < lightUtilities.Length; i++)
         {
             lightUtilities[i].OnLightGraphClear();
