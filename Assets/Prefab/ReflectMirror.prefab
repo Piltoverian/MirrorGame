@@ -79,7 +79,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 200
   m_MaskInteraction: 0
   m_Sprite: {fileID: 830648935, guid: 937608a1dfaa7c04a9eee9abbcd8a286, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -393,13 +393,14 @@ MonoBehaviour:
   notPushableBrightness: 1
   mirrorMass: 1
   linearDamping: 14
-  maxPushSpeed: 4
+  maxPushSpeed: 3
   mirrorSign: 22.5
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
   detectionRange: 3
-  signDisplayTime: 4
+  signDisplayTime: 2
+  useOverlapCircleSignDetection: 1
   rotationCheckThickness: 0.8
   rotationCheckLengthPadding: 1
   snapToGridOnStart: 1
@@ -558,7 +559,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 200
   m_MaskInteraction: 0
   m_Sprite: {fileID: 2130735755, guid: 937608a1dfaa7c04a9eee9abbcd8a286, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -649,7 +650,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 200
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1893978261, guid: 937608a1dfaa7c04a9eee9abbcd8a286, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -740,7 +741,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 200
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1702952007, guid: 937608a1dfaa7c04a9eee9abbcd8a286, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.8627451}

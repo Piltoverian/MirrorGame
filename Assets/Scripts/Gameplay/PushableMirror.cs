@@ -1,8 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PushableMirror : MonoBehaviour
 {
+    private static readonly List<PushableMirror> allMirrors = new List<PushableMirror>();
+    private static bool globalSignsVisible = false;
+
     [Header("Mirror Gameplay")]
     [SerializeField] private bool isPushable = true;
     [SerializeField] private bool isHorizontalPushable = true;
@@ -35,11 +39,13 @@ public class PushableMirror : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float detectionRange = 3f;
     [SerializeField] private float signDisplayTime = 5f;
+    [SerializeField] private bool useOverlapCircleSignDetection = true;
 
-    private bool isPlayerInRange = false;
-    private bool isSignCurrentlyShown = false;
+    private bool isPlayerInSignRange = false;
+    private bool isAutoSignShown = false;
     private float signTimer = 0f;
 
+    private readonly HashSet<MirrorPushZone> activeSignZones = new HashSet<MirrorPushZone>();
     private Transform signContainer;
 
     [Header("Rotation Collision Check")]
@@ -64,6 +70,7 @@ public class PushableMirror : MonoBehaviour
 
     public bool IsPushable => isPushable;
     public bool IsRotationable => isRotationable;
+    public static bool GlobalSignsVisible => globalSignsVisible;
 
     private void Awake()
     {
@@ -76,8 +83,17 @@ public class PushableMirror : MonoBehaviour
         ApplyVisualState();
 
         SetupSignContainer();
+        RefreshWarningVisuals();
+    }
 
-        ShowWarning(false);
+    private void OnEnable()
+    {
+        if (!allMirrors.Contains(this))
+        {
+            allMirrors.Add(this);
+        }
+
+        RefreshWarningVisuals();
     }
 
     private void Start()
@@ -90,34 +106,23 @@ public class PushableMirror : MonoBehaviour
         UpdateVisualScale();
     }
 
+    private void OnDisable()
+    {
+        allMirrors.Remove(this);
+        activeSignZones.Clear();
+        isPlayerInSignRange = false;
+        isAutoSignShown = false;
+        signTimer = 0f;
+    }
+
+    private void OnDestroy()
+    {
+        allMirrors.Remove(this);
+    }
+
     private void Update()
     {
-        Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, detectionRange, playerLayer);
-        bool playerCurrentlyInRange = (playerCollider != null);
-
-        if (playerCurrentlyInRange && !isPlayerInRange)
-        {
-            isPlayerInRange = true;
-            signTimer = 0f;                  
-            ShowWarning(true);                
-            isSignCurrentlyShown = true;
-        }
-        else if (!playerCurrentlyInRange && isPlayerInRange)
-        {
-            isPlayerInRange = false;
-            ShowWarning(false);             
-            isSignCurrentlyShown = false;
-        }
-
-        if (isPlayerInRange && isSignCurrentlyShown)
-        {
-            signTimer += Time.deltaTime;
-            if (signTimer >= signDisplayTime)
-            {
-                ShowWarning(false);          
-                isSignCurrentlyShown = false;
-            }
-        }
+        HandleAutoSignVisibility();
     }
 
     private void FixedUpdate()
@@ -154,6 +159,7 @@ public class PushableMirror : MonoBehaviour
             CacheOriginalColors();
             ApplyPhysicsSettings();
             ApplyVisualState();
+            RefreshWarningVisuals();
         }
         else
         {
@@ -162,6 +168,157 @@ public class PushableMirror : MonoBehaviour
         }
     }
 #endif
+
+    public static void ToggleAllSigns()
+    {
+        SetAllSignsVisible(!globalSignsVisible);
+    }
+
+    public static void SetAllSignsVisible(bool show)
+    {
+        globalSignsVisible = show;
+
+        for (int i = allMirrors.Count - 1; i >= 0; i--)
+        {
+            PushableMirror mirror = allMirrors[i];
+
+            if (mirror == null)
+            {
+                allMirrors.RemoveAt(i);
+                continue;
+            }
+
+            if (!show)
+            {
+                mirror.ResetAutoSignAfterManualHide();
+            }
+
+            mirror.RefreshWarningVisuals();
+        }
+    }
+
+    public void SetSignZoneActive(MirrorPushZone zone, bool active)
+    {
+        if (zone == null) return;
+
+        bool changed = active
+            ? activeSignZones.Add(zone)
+            : activeSignZones.Remove(zone);
+
+        if (!changed) return;
+
+        HandleAutoSignVisibility();
+    }
+
+    public void ShowWarning(bool show)
+    {
+        if (show)
+        {
+            isAutoSignShown = true;
+            signTimer = 0f;
+        }
+        else
+        {
+            isAutoSignShown = false;
+        }
+
+        RefreshWarningVisuals();
+    }
+
+    private void HandleAutoSignVisibility()
+    {
+        if (globalSignsVisible)
+        {
+            RefreshWarningVisuals();
+            return;
+        }
+
+        bool playerCurrentlyInRange = IsPlayerCurrentlyInSignRange();
+
+        if (playerCurrentlyInRange && !isPlayerInSignRange)
+        {
+            isPlayerInSignRange = true;
+            isAutoSignShown = true;
+            signTimer = 0f;
+        }
+        else if (!playerCurrentlyInRange && isPlayerInSignRange)
+        {
+            isPlayerInSignRange = false;
+            isAutoSignShown = false;
+            signTimer = 0f;
+        }
+
+        if (isPlayerInSignRange && isAutoSignShown)
+        {
+            signTimer += Time.deltaTime;
+
+            if (signTimer >= signDisplayTime)
+            {
+                isAutoSignShown = false;
+            }
+        }
+
+        RefreshWarningVisuals();
+    }
+
+    private bool IsPlayerCurrentlyInSignRange()
+    {
+        if (activeSignZones.Count > 0)
+        {
+            return true;
+        }
+
+        if (!useOverlapCircleSignDetection || playerLayer.value == 0)
+        {
+            return false;
+        }
+
+        Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, detectionRange, playerLayer);
+        return playerCollider != null;
+    }
+
+    private void ResetAutoSignAfterManualHide()
+    {
+        isAutoSignShown = false;
+        signTimer = 0f;
+        isPlayerInSignRange = IsPlayerCurrentlyInSignRange();
+    }
+
+    private void RefreshWarningVisuals()
+    {
+        bool shouldShow = globalSignsVisible || isAutoSignShown;
+
+        if (cantPushSprite != null) cantPushSprite.gameObject.SetActive(false);
+        if (cantPushHorizontalSprite != null) cantPushHorizontalSprite.gameObject.SetActive(false);
+        if (cantPushVerticalSprite != null) cantPushVerticalSprite.gameObject.SetActive(false);
+        if (cantRotateSprite != null) cantRotateSprite.gameObject.SetActive(false);
+
+        if (!shouldShow) return;
+
+        bool fullyUnpushable = !isPushable || (!isHorizontalPushable && !isVerticalPushable);
+
+        if (fullyUnpushable)
+        {
+            if (cantPushSprite != null) cantPushSprite.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (!isHorizontalPushable && cantPushHorizontalSprite != null)
+            {
+                cantPushHorizontalSprite.gameObject.SetActive(true);
+            }
+
+            if (!isVerticalPushable && cantPushVerticalSprite != null)
+            {
+                cantPushVerticalSprite.gameObject.SetActive(true);
+            }
+        }
+
+        if (!isRotationable && cantRotateSprite != null)
+        {
+            cantRotateSprite.gameObject.SetActive(true);
+        }
+    }
 
     private void CacheRenderers()
     {
@@ -331,6 +488,8 @@ public class PushableMirror : MonoBehaviour
 
     private void SetupSignContainer()
     {
+        if (signContainer != null) return;
+
         signContainer = new GameObject(name + "_SignsContainer").transform;
         signContainer.position = transform.position;
 
@@ -356,6 +515,7 @@ public class PushableMirror : MonoBehaviour
             signContainer.localScale = Vector3.one * 0.5f;
         }
     }
+
     public void Rotate(float sign)
     {
         if (!isRotationable) return;
@@ -382,39 +542,6 @@ public class PushableMirror : MonoBehaviour
             transform.eulerAngles = new Vector3(0f, 0f, targetAngle);
         }
         UpdateLightGraph();
-    }
-
-    public void ShowWarning(bool show)
-    {
-        if (cantPushSprite != null) cantPushSprite.gameObject.SetActive(false);
-        if (cantPushHorizontalSprite != null) cantPushHorizontalSprite.gameObject.SetActive(false);
-        if (cantPushVerticalSprite != null) cantPushVerticalSprite.gameObject.SetActive(false);
-        if (cantRotateSprite != null) cantRotateSprite.gameObject.SetActive(false);
-
-        if (!show) return;
-
-        bool fullyUnpushable = !isPushable || (!isHorizontalPushable && !isVerticalPushable);
-
-        if (fullyUnpushable)
-        {
-            if (cantPushSprite != null) cantPushSprite.gameObject.SetActive(true);
-        }
-        else
-        {
-            if (!isHorizontalPushable && cantPushHorizontalSprite != null)
-                cantPushHorizontalSprite.gameObject.SetActive(true);
-
-            if (!isVerticalPushable && cantPushVerticalSprite != null)
-                cantPushVerticalSprite.gameObject.SetActive(true);
-
-            if (!isHorizontalPushable && !isVerticalPushable && cantPushSprite != null)
-                cantPushSprite.gameObject.SetActive(true);
-        }
-
-        if (!isRotationable)
-        {
-            if (cantRotateSprite != null) cantRotateSprite.gameObject.SetActive(true);
-        }
     }
 
     private bool CanRotateTo(float targetAngle)

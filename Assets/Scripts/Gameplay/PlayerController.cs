@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float pushMoveSpeed = 2f;
 
     private PlayerInputActions inputActions;
+    private InputAction signAction;
     private Vector2 currentMoveInput;
     private Rigidbody2D rb;
 
@@ -42,6 +43,8 @@ public class PlayerController : MonoBehaviour
                 OnRotate(rotateInput);
             }
         };
+
+        BindSignAction();
     }
 
     private void OnEnable()
@@ -52,6 +55,16 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         inputActions.Player.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        if (signAction != null)
+        {
+            signAction.performed -= OnSignPerformed;
+        }
+
+        inputActions?.Dispose();
     }
 
     private void FixedUpdate()
@@ -85,6 +98,35 @@ public class PlayerController : MonoBehaviour
         if (mirrorToRotate == null) return;
 
         mirrorToRotate.Rotate(directionSign);
+    }
+
+    private void BindSignAction()
+    {
+        InputActionMap playerMap = inputActions.Player.Get();
+
+        signAction = playerMap.FindAction("Sign", false);
+        if (signAction == null)
+        {
+            signAction = playerMap.FindAction("sign", false);
+        }
+
+        if (signAction == null)
+        {
+            Debug.LogWarning("[PlayerController] Missing Sign action in Player action map. Add an action named Sign/sign and regenerate PlayerInputActions if needed.");
+            return;
+        }
+
+        signAction.performed += OnSignPerformed;
+    }
+
+    private void OnSignPerformed(InputAction.CallbackContext context)
+    {
+        OnSignToggle();
+    }
+
+    private void OnSignToggle()
+    {
+        PushableMirror.ToggleAllSigns();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
