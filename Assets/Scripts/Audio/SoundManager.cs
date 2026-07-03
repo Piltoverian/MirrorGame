@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     [Header("BGM")]
     public AudioClip mainMenuMusic;
     public AudioClip gameplayMusic;
+    [SerializeField, Range(0f, 1f)] private float bgmVolume = 0.35f;
 
     [Header("Scene Auto Play")]
     [SerializeField] private bool autoPlayMusicOnSceneLoaded = true;
@@ -41,6 +42,7 @@ public class SoundManager : MonoBehaviour
     private string lastAutoHandledSceneName;
 
     public bool IsMusicMuted => musicMuted;
+    public float BGMVolume => bgmVolume;
 
     private void Awake()
     {
@@ -55,6 +57,7 @@ public class SoundManager : MonoBehaviour
 
         LoadMusicMuteState();
         EnsureAudioSources();
+        ApplyMusicVolume();
         ApplyMusicMuteState();
     }
 
@@ -91,6 +94,16 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    private void OnValidate()
+    {
+        bgmVolume = Mathf.Clamp01(bgmVolume);
+
+        if (bgmSource != null)
+        {
+            bgmSource.volume = bgmVolume;
+        }
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (!autoPlayMusicOnSceneLoaded)
@@ -115,6 +128,7 @@ public class SoundManager : MonoBehaviour
 
         SetupAudioSource(bgmSource, true);
         SetupAudioSource(sfxSource, false);
+        ApplyMusicVolume();
     }
 
     private AudioSource CreateAudioSource(string sourceName, bool loop)
@@ -225,6 +239,7 @@ public class SoundManager : MonoBehaviour
 
         if (currentMusic == clip && bgmSource.isPlaying)
         {
+            ApplyMusicVolume();
             ApplyMusicMuteState();
             return;
         }
@@ -234,6 +249,7 @@ public class SoundManager : MonoBehaviour
         bgmSource.Stop();
         bgmSource.clip = clip;
         bgmSource.loop = true;
+        ApplyMusicVolume();
         ApplyMusicMuteState();
         bgmSource.Play();
     }
@@ -287,6 +303,18 @@ public class SoundManager : MonoBehaviour
         bgmSource.mute = musicMuted;
     }
 
+    private void ApplyMusicVolume()
+    {
+        bgmVolume = Mathf.Clamp01(bgmVolume);
+
+        if (bgmSource == null)
+        {
+            return;
+        }
+
+        bgmSource.volume = bgmVolume;
+    }
+
     private void LoadMusicMuteState()
     {
         if (!saveMusicMuteState || string.IsNullOrEmpty(musicMutePlayerPrefsKey))
@@ -338,12 +366,8 @@ public class SoundManager : MonoBehaviour
 
     public void SetMusicVolume(float value)
     {
-        if (bgmSource == null)
-        {
-            return;
-        }
-
-        bgmSource.volume = Mathf.Clamp01(value);
+        bgmVolume = Mathf.Clamp01(value);
+        ApplyMusicVolume();
     }
 
     public void SetSFXVolume(float value)

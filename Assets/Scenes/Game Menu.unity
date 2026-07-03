@@ -804,6 +804,7 @@ MonoBehaviour:
   sfxSource: {fileID: 0}
   mainMenuMusic: {fileID: 8300000, guid: e8430fc0498d9704d94a05b3038a3d8c, type: 3}
   gameplayMusic: {fileID: 8300000, guid: e8430fc0498d9704d94a05b3038a3d8c, type: 3}
+  bgmVolume: 0.05
   autoPlayMusicOnSceneLoaded: 1
   playGameStartOnGameplaySceneLoaded: 1
   mainMenuSceneNames:
@@ -2021,7 +2022,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3324862563414966366, guid: 201780b8fb365a24a817ca5bbc1121ab, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5372609467869084653, guid: 201780b8fb365a24a817ca5bbc1121ab, type: 3}
       propertyPath: m_Pivot.x
