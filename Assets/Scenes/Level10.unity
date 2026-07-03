@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d117ec75d86ac141911f7f8c331bc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightSource
-  lightSourceIndex: 3
+  lightSourceIndex: 2
   lightLuminosity: 2
 --- !u!1 &88301978
 GameObject:
@@ -1588,6 +1588,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
   isPushable: 1
+  isHorizontalPushable: 1
+  isVerticalPushable: 1
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -1601,6 +1608,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03
@@ -2855,8 +2869,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613506307}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1.6482, y: 2.32803, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.41, y: 3.33, z: 0}
   m_LocalScale: {x: 1, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2869,7 +2883,7 @@ Transform:
   - {fileID: 942760850}
   - {fileID: 1148781143}
   m_Father: {fileID: 107915095}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &613506309
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2929,6 +2943,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
   isPushable: 1
+  isHorizontalPushable: 1
+  isVerticalPushable: 1
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -2942,6 +2963,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03
@@ -4305,6 +4333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e110fce691a669441ba51c4ec7695eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WinningTest
+  winScreen: {fileID: 0}
+  currentLevel: 0
 --- !u!4 &767973369
 Transform:
   m_ObjectHideFlags: 0
@@ -5297,6 +5327,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
   isPushable: 1
+  isHorizontalPushable: 0
+  isVerticalPushable: 1
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -5310,6 +5347,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03
@@ -6540,6 +6584,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
   isPushable: 1
+  isHorizontalPushable: 0
+  isVerticalPushable: 1
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -6553,6 +6604,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03
@@ -7163,7 +7221,7 @@ Transform:
   m_GameObject: {fileID: 1164255976}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 10.6482, y: 3.32803, z: 0}
+  m_LocalPosition: {x: 3.6482, y: 3.32803, z: 0}
   m_LocalScale: {x: 1, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7236,6 +7294,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
   isPushable: 1
+  isHorizontalPushable: 1
+  isVerticalPushable: 0
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -7249,6 +7314,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03
@@ -8542,7 +8614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d117ec75d86ac141911f7f8c331bc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightSource
-  lightSourceIndex: 1
+  lightSourceIndex: 3
   lightLuminosity: 1
 --- !u!1 &1640020908
 GameObject:
@@ -10074,6 +10146,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
   isPushable: 1
+  isHorizontalPushable: 1
+  isVerticalPushable: 1
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -10087,6 +10166,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03

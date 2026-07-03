@@ -454,6 +454,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7087123161022024857, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
+      propertyPath: isPushable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8494138977035154122, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
@@ -537,7 +541,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5778355540461849622, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       insertIndex: 0
       addedObject: {fileID: 69060530}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 990515036521570296, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
 --- !u!1 &170323139
 GameObject:
@@ -964,7 +971,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5778355540461849622, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       insertIndex: 0
       addedObject: {fileID: 1023095669}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 990515036521570296, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
 --- !u!1001 &667533068
 PrefabInstance:
@@ -1041,11 +1051,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 780491521786101232, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: -3.22
       objectReference: {fileID: 0}
     - target: {fileID: 780491521786101232, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 3.18
       objectReference: {fileID: 0}
     - target: {fileID: 780491521786101232, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1110,6 +1120,10 @@ PrefabInstance:
     - target: {fileID: 5838507268424032037, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
       propertyPath: m_Offset.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087123161022024857, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
+      propertyPath: isPushable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8494138977035154122, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1266,6 +1280,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e110fce691a669441ba51c4ec7695eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WinningTest
+  winScreen: {fileID: 0}
+  currentLevel: 0
 --- !u!4 &971006727
 Transform:
   m_ObjectHideFlags: 0
@@ -1695,6 +1711,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7087123161022024857, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
+      propertyPath: isPushable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8494138977035154122, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
@@ -2065,6 +2085,14 @@ PrefabInstance:
     - target: {fileID: 5838507268424032037, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
       propertyPath: m_Offset.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087123161022024857, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
+      propertyPath: isVerticalPushable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087123161022024857, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
+      propertyPath: isHorizontalPushable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8494138977035154122, guid: 4a704b2eab34bf14aa89b3b4e9e78093, type: 3}
       propertyPath: m_LocalPosition.y
