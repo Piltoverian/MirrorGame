@@ -758,7 +758,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.45, g: 0.45, b: 0.45, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1719,7 +1719,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.45, g: 0.45, b: 0.45, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2805,6 +2805,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e110fce691a669441ba51c4ec7695eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WinningTest
+  winScreen: {fileID: 0}
+  currentLevel: 0
 --- !u!4 &782626139
 Transform:
   m_ObjectHideFlags: 0
@@ -2921,7 +2923,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea95f1f754c107f408eb56b397d6bd92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
-  isPushable: 1
+  isPushable: 0
+  isHorizontalPushable: 1
+  isVerticalPushable: 1
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -2935,6 +2944,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03
@@ -2989,7 +3005,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9c9083d43f9c3ee429ce8b982f096cf9, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -3400,7 +3416,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.45, g: 0.45, b: 0.45, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3993,6 +4009,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
   isPushable: 1
+  isHorizontalPushable: 1
+  isVerticalPushable: 1
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -4006,6 +4029,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03
@@ -5253,7 +5283,7 @@ SpriteRenderer:
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.45, g: 0.45, b: 0.45, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6145,7 +6175,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5778355540461849622, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       insertIndex: 0
       addedObject: {fileID: 1819041479}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 990515036521570296, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
 --- !u!1 &1686474706
 GameObject:
@@ -6402,6 +6435,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
   isPushable: 1
+  isHorizontalPushable: 1
+  isVerticalPushable: 1
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -6415,6 +6455,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03
@@ -6760,6 +6807,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
   isPushable: 1
+  isHorizontalPushable: 0
+  isVerticalPushable: 1
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -6773,6 +6827,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03
@@ -7159,6 +7220,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableMirror
   isPushable: 1
+  isHorizontalPushable: 1
+  isVerticalPushable: 0
+  isRotationable: 1
+  cantPushSprite: {fileID: 0}
+  cantPushHorizontalSprite: {fileID: 0}
+  cantPushVerticalSprite: {fileID: 0}
+  cantRotateSprite: {fileID: 0}
   gridCellsX: 1
   mirrorThickness: 0.15
   renderersToTint:
@@ -7172,6 +7240,13 @@ MonoBehaviour:
   linearDamping: 8
   maxPushSpeed: 1.6
   mirrorSign: 22.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectionRange: 3
+  signDisplayTime: 5
+  rotationCheckThickness: 0.8
+  rotationCheckLengthPadding: 0.1
   snapToGridOnStart: 1
   snapToGridWhenStopped: 0
   stoppedVelocityThreshold: 0.03
