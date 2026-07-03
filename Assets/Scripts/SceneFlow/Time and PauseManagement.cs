@@ -17,7 +17,7 @@ public class TimeandPauseManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PauseInput.IsPressed())
+        if (PauseInput.WasPressedThisFrame())
         {
             Debug.Log("Pause button pressed");
             if (!isPaused)
