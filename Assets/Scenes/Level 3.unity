@@ -329,6 +329,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameFlowCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4020821194470819364, guid: ade3bce71a0b324439434d6c81b90502, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4969451055919250361, guid: ade3bce71a0b324439434d6c81b90502, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -408,6 +412,14 @@ PrefabInstance:
     - target: {fileID: 4969451055919250361, guid: ade3bce71a0b324439434d6c81b90502, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291732913806366063, guid: ade3bce71a0b324439434d6c81b90502, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075194645245912784, guid: ade3bce71a0b324439434d6c81b90502, type: 3}
+      propertyPath: sceneName
+      value: Level 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3810,7 +3822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d117ec75d86ac141911f7f8c331bc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightSource
-  lightSourceIndex: 1
+  lightSourceIndex: 2
   lightLuminosity: 10
 --- !u!4 &1708024648
 Transform:
