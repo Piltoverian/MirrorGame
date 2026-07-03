@@ -391,9 +391,9 @@ MonoBehaviour:
   renderersToTint:
   - {fileID: 1636505820377606897}
   notPushableBrightness: 1
-  mirrorMass: 18
+  mirrorMass: 1
   linearDamping: 14
-  maxPushSpeed: 0.8
+  maxPushSpeed: 4
   mirrorSign: 22.5
   playerLayer:
     serializedVersion: 2
