@@ -19,6 +19,11 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private string[] mainMenuSceneNames = { "MainMenu", "Menu", "LevelSelect" };
     [SerializeField] private string[] gameplaySceneNames = new string[0];
 
+    [Header("Music Mute")]
+    [SerializeField] private bool musicMuted;
+    [SerializeField] private bool saveMusicMuteState = true;
+    [SerializeField] private string musicMutePlayerPrefsKey = "LightMirror_MusicMuted";
+
     [Header("SFX")]
     public AudioClip gameStart;
     public AudioClip win;
@@ -35,6 +40,8 @@ public class SoundManager : MonoBehaviour
     private int lastAutoHandledFrame = -1;
     private string lastAutoHandledSceneName;
 
+    public bool IsMusicMuted => musicMuted;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -46,7 +53,9 @@ public class SoundManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        LoadMusicMuteState();
         EnsureAudioSources();
+        ApplyMusicMuteState();
     }
 
     private void OnEnable()
@@ -216,6 +225,7 @@ public class SoundManager : MonoBehaviour
 
         if (currentMusic == clip && bgmSource.isPlaying)
         {
+            ApplyMusicMuteState();
             return;
         }
 
@@ -224,6 +234,7 @@ public class SoundManager : MonoBehaviour
         bgmSource.Stop();
         bgmSource.clip = clip;
         bgmSource.loop = true;
+        ApplyMusicMuteState();
         bgmSource.Play();
     }
 
@@ -236,6 +247,65 @@ public class SoundManager : MonoBehaviour
 
         bgmSource.Stop();
         currentMusic = null;
+    }
+
+    public void ToggleMusicMute()
+    {
+        SetMusicMuted(!musicMuted);
+    }
+
+    public void MuteMusic()
+    {
+        SetMusicMuted(true);
+    }
+
+    public void UnmuteMusic()
+    {
+        SetMusicMuted(false);
+    }
+
+    public void SetMusicMuted(bool muted)
+    {
+        if (musicMuted == muted)
+        {
+            ApplyMusicMuteState();
+            return;
+        }
+
+        musicMuted = muted;
+        ApplyMusicMuteState();
+        SaveMusicMuteState();
+    }
+
+    private void ApplyMusicMuteState()
+    {
+        if (bgmSource == null)
+        {
+            return;
+        }
+
+        bgmSource.mute = musicMuted;
+    }
+
+    private void LoadMusicMuteState()
+    {
+        if (!saveMusicMuteState || string.IsNullOrEmpty(musicMutePlayerPrefsKey))
+        {
+            return;
+        }
+
+        musicMuted = PlayerPrefs.GetInt(musicMutePlayerPrefsKey, musicMuted ? 1 : 0) == 1;
+    }
+
+    private void SaveMusicMuteState()
+    {
+        if (!saveMusicMuteState || string.IsNullOrEmpty(musicMutePlayerPrefsKey))
+        {
+            return;
+        }
+
+        PlayerPrefs.SetInt(musicMutePlayerPrefsKey, musicMuted ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
     #endregion
