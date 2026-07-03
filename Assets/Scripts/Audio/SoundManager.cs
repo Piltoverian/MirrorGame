@@ -12,12 +12,18 @@ public class SoundManager : MonoBehaviour
     [Header("BGM")]
     public AudioClip mainMenuMusic;
     public AudioClip gameplayMusic;
+    [SerializeField, Range(0f, 1f)] private float bgmVolume = 0.35f;
 
     [Header("Scene Auto Play")]
     [SerializeField] private bool autoPlayMusicOnSceneLoaded = true;
     [SerializeField] private bool playGameStartOnGameplaySceneLoaded = true;
     [SerializeField] private string[] mainMenuSceneNames = { "MainMenu", "Menu", "LevelSelect" };
     [SerializeField] private string[] gameplaySceneNames = new string[0];
+
+    [Header("Music Mute")]
+    [SerializeField] private bool musicMuted;
+    [SerializeField] private bool saveMusicMuteState = true;
+    [SerializeField] private string musicMutePlayerPrefsKey = "LightMirror_MusicMuted";
 
     [Header("SFX")]
     public AudioClip gameStart;
@@ -35,6 +41,9 @@ public class SoundManager : MonoBehaviour
     private int lastAutoHandledFrame = -1;
     private string lastAutoHandledSceneName;
 
+    public bool IsMusicMuted => musicMuted;
+    public float BGMVolume => bgmVolume;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -46,7 +55,10 @@ public class SoundManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        LoadMusicMuteState();
         EnsureAudioSources();
+        ApplyMusicVolume();
+        ApplyMusicMuteState();
     }
 
     private void OnEnable()
@@ -82,6 +94,16 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    private void OnValidate()
+    {
+        bgmVolume = Mathf.Clamp01(bgmVolume);
+
+        if (bgmSource != null)
+        {
+            bgmSource.volume = bgmVolume;
+        }
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (!autoPlayMusicOnSceneLoaded)
@@ -106,6 +128,7 @@ public class SoundManager : MonoBehaviour
 
         SetupAudioSource(bgmSource, true);
         SetupAudioSource(sfxSource, false);
+        ApplyMusicVolume();
     }
 
     private AudioSource CreateAudioSource(string sourceName, bool loop)
@@ -216,6 +239,8 @@ public class SoundManager : MonoBehaviour
 
         if (currentMusic == clip && bgmSource.isPlaying)
         {
+            ApplyMusicVolume();
+            ApplyMusicMuteState();
             return;
         }
 
@@ -224,6 +249,8 @@ public class SoundManager : MonoBehaviour
         bgmSource.Stop();
         bgmSource.clip = clip;
         bgmSource.loop = true;
+        ApplyMusicVolume();
+        ApplyMusicMuteState();
         bgmSource.Play();
     }
 
@@ -236,6 +263,77 @@ public class SoundManager : MonoBehaviour
 
         bgmSource.Stop();
         currentMusic = null;
+    }
+
+    public void ToggleMusicMute()
+    {
+        SetMusicMuted(!musicMuted);
+    }
+
+    public void MuteMusic()
+    {
+        SetMusicMuted(true);
+    }
+
+    public void UnmuteMusic()
+    {
+        SetMusicMuted(false);
+    }
+
+    public void SetMusicMuted(bool muted)
+    {
+        if (musicMuted == muted)
+        {
+            ApplyMusicMuteState();
+            return;
+        }
+
+        musicMuted = muted;
+        ApplyMusicMuteState();
+        SaveMusicMuteState();
+    }
+
+    private void ApplyMusicMuteState()
+    {
+        if (bgmSource == null)
+        {
+            return;
+        }
+
+        bgmSource.mute = musicMuted;
+    }
+
+    private void ApplyMusicVolume()
+    {
+        bgmVolume = Mathf.Clamp01(bgmVolume);
+
+        if (bgmSource == null)
+        {
+            return;
+        }
+
+        bgmSource.volume = bgmVolume;
+    }
+
+    private void LoadMusicMuteState()
+    {
+        if (!saveMusicMuteState || string.IsNullOrEmpty(musicMutePlayerPrefsKey))
+        {
+            return;
+        }
+
+        musicMuted = PlayerPrefs.GetInt(musicMutePlayerPrefsKey, musicMuted ? 1 : 0) == 1;
+    }
+
+    private void SaveMusicMuteState()
+    {
+        if (!saveMusicMuteState || string.IsNullOrEmpty(musicMutePlayerPrefsKey))
+        {
+            return;
+        }
+
+        PlayerPrefs.SetInt(musicMutePlayerPrefsKey, musicMuted ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
     #endregion
@@ -268,12 +366,8 @@ public class SoundManager : MonoBehaviour
 
     public void SetMusicVolume(float value)
     {
-        if (bgmSource == null)
-        {
-            return;
-        }
-
-        bgmSource.volume = Mathf.Clamp01(value);
+        bgmVolume = Mathf.Clamp01(value);
+        ApplyMusicVolume();
     }
 
     public void SetSFXVolume(float value)

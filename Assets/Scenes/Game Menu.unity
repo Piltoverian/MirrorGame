@@ -130,6 +130,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a80821bf81ea44f4093ca29d18b71614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSelectButton
+--- !u!1 &361142438 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1548321925523712065, guid: 201780b8fb365a24a817ca5bbc1121ab, type: 3}
+  m_PrefabInstance: {fileID: 7697354911362012665}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &361142440 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 537298924601381179, guid: 201780b8fb365a24a817ca5bbc1121ab, type: 3}
+  m_PrefabInstance: {fileID: 7697354911362012665}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361142438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!114 &361142443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361142438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1bd49a8df8954848af0e6599c77c42c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicMuteButton
+  button: {fileID: 361142440}
+  autoBindButtonClick: 1
+  musicOnVisual: {fileID: 0}
+  musicOffVisual: {fileID: 0}
+  label: {fileID: 0}
+  musicOnText: 
+  musicOffText: 
 --- !u!1 &363769930 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6974314234244878691, guid: 201780b8fb365a24a817ca5bbc1121ab, type: 3}
@@ -769,6 +804,7 @@ MonoBehaviour:
   sfxSource: {fileID: 0}
   mainMenuMusic: {fileID: 8300000, guid: e8430fc0498d9704d94a05b3038a3d8c, type: 3}
   gameplayMusic: {fileID: 8300000, guid: e8430fc0498d9704d94a05b3038a3d8c, type: 3}
+  bgmVolume: 0.05
   autoPlayMusicOnSceneLoaded: 1
   playGameStartOnGameplaySceneLoaded: 1
   mainMenuSceneNames:
@@ -777,6 +813,9 @@ MonoBehaviour:
   - LevelSelect
   gameplaySceneNames:
   - Game Menu
+  musicMuted: 0
+  saveMusicMuteState: 1
+  musicMutePlayerPrefsKey: LightMirror_MusicMuted
   gameStart: {fileID: 8300000, guid: ee98daf6b42f49b42810eb77a918089a, type: 3}
   win: {fileID: 8300000, guid: 683fc073c1bb11e468f96a1405ce91b2, type: 3}
   shine: {fileID: 0}
@@ -1981,6 +2020,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Setting
       objectReference: {fileID: 0}
+    - target: {fileID: 3324862563414966366, guid: 201780b8fb365a24a817ca5bbc1121ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5372609467869084653, guid: 201780b8fb365a24a817ca5bbc1121ab, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2065,6 +2108,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1548321925523712065, guid: 201780b8fb365a24a817ca5bbc1121ab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 361142443}
     - targetCorrespondingSourceObject: {fileID: 6974314234244878691, guid: 201780b8fb365a24a817ca5bbc1121ab, type: 3}
       insertIndex: -1
       addedObject: {fileID: 363769935}
