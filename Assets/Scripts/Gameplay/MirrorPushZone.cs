@@ -8,15 +8,20 @@ public class MirrorPushZone : MonoBehaviour
 
     private Color normalColor;
     private PushableMirror parentMirror;
+    private bool isHighlighted;
 
     private void Awake()
     {
         parentMirror = GetComponentInParent<PushableMirror>();
-
         if (faceRenderer != null)
         {
             normalColor = faceRenderer.color;
         }
+    }
+
+    private void OnDisable()
+    {
+        Highlight(false);
     }
 
     public PushableMirror GetMirror()
@@ -24,10 +29,23 @@ public class MirrorPushZone : MonoBehaviour
         return parentMirror;
     }
 
-    public void Highlight(bool isHighlighted)
+    public void Highlight(bool shouldHighlight)
     {
-        if (faceRenderer == null) return;
+        if (isHighlighted == shouldHighlight)
+        {
+            return;
+        }
 
-        faceRenderer.color = isHighlighted ? highlightColor : normalColor;
+        isHighlighted = shouldHighlight;
+
+        if (faceRenderer != null)
+        {
+            faceRenderer.color = isHighlighted ? highlightColor : normalColor;
+        }
+
+        if (parentMirror != null)
+        {
+            parentMirror.SetSignZoneActive(this, isHighlighted);
+        }
     }
 }
