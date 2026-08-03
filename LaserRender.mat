@@ -76,12 +76,12 @@ Material:
     - _DstBlendAlpha: 0
     - _EnableExternalAlpha: 0
     - _GRADIENTMODE: 1
-    - _Intensity: 13.2
+    - _Intensity: 4.54
     - _LaserEdgeSmoothness: 2
     - _LaserThickness: 1
     - _Light: 0
     - _Light_Amplification: 10000
-    - _Luminosity: 1.13
+    - _Luminosity: 6.87
     - _MaxLuminosity: 9.71
     - _QueueControl: 0
     - _QueueOffset: 0
