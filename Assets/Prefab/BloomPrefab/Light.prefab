@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6907757004896500386}
   - component: {fileID: 542048280176503796}
+  - component: {fileID: -1101456363727329488}
   m_Layer: 6
   m_Name: Light
   m_TagString: Untagged
@@ -77,9 +78,9 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -494683797
-  m_SortingLayer: -1
-  m_SortingOrder: 0
+  m_SortingLayerID: -1175131279
+  m_SortingLayer: 2
+  m_SortingOrder: 99
   m_MaskInteraction: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -142,3 +143,16 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-1101456363727329488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6056944842049241317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e46aa546139ce14ba07be7032cd89fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightRay
+  luminosity: 0

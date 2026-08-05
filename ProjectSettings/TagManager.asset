@@ -11,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
+  - Light
+  - lightUltility
   - Player
   - 
-  - 
-  - 
-  - 
+  - Interactable
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 1793731389
+    locked: 0
+  - name: Light
+    uniqueID: 3119836017
     locked: 0
   m_RenderingLayers:
   - Default
