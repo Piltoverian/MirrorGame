@@ -23,7 +23,7 @@ public class LightRay : MonoBehaviour
     {
         if (lineRenderer!=null && lineRenderer.material != null)
         {
-            lineRenderer.material.SetFloat("_LightColor",color.r);
+            lineRenderer.material.SetColor("_LightColor", color);
         }
     }
 }

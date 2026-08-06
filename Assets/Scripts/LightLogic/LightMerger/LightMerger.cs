@@ -56,11 +56,14 @@ public class LightMerger : LightUtility
             hit.Add(lightRayData);
         }
         float lightLuminositySum = 0f;
+        Color colorSum = Color.black;
         foreach (var rayData in hit)
         {
             lightLuminositySum += rayData.lightluminosity;
+            colorSum += rayData.Color;
         }
       currentRayData.lightluminosity = lightLuminositySum;
+      currentRayData.Color = colorSum;
       currentRayData = LightRayHelper.LightEmit(currentRayData);
       var lightRendererPipeLine = FindAnyObjectByType<LightRendererPipeLine>();
       if (lightRendererPipeLine != null)

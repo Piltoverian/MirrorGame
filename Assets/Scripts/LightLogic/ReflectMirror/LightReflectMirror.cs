@@ -55,7 +55,7 @@ public class LightReflectMirror : LightUtility
             allChildren[i].gameObject.layer = 2; 
         }
 
-        var lightdata = LightRayHelper.LightEmit(gameObject, CalculateReflectDir(lightRayData), lightRayData.lightdiagramindex, lightRayData.lightluminosity,lightRayData.hitpos);
+        var lightdata = LightRayHelper.LightEmit(gameObject, CalculateReflectDir(lightRayData), lightRayData.lightdiagramindex, lightRayData.lightluminosity,lightRayData.hitpos, lightRayData.Color);
 
         for (int i = 0; i < allChildren.Length; i++)
         {

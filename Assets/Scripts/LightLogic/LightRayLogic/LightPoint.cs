@@ -14,6 +14,7 @@ public class LightRayData//use this to store the data of a light ray used to cac
     public Vector2 hitpos;//use for draw the light ray
     public Vector2 emitpos;//use for draw the light ray
     public Vector3 raydir;//use for draw the light ray
+    public Color Color;
 
     public LightRayData()
     {
@@ -24,12 +25,13 @@ public class LightRayData//use this to store the data of a light ray used to cac
         hitpos = Vector2.zero;
         emitpos = Vector2.zero;
         raydir = Vector3.zero;
+        Color = Color.white;
     }   
 }
 
 public static class LightRayHelper
 {
-    public static LightRayData LightEmit(GameObject ultility, Vector3 lightDir, List<int> lightsourceindex, float LightLuminosity,Vector3 emitpoint)
+    public static LightRayData LightEmit(GameObject ultility, Vector3 lightDir, List<int> lightsourceindex, float LightLuminosity,Vector3 emitpoint, Color rayColor)
     {
         LightRayData lightRayData = new LightRayData();
         lightRayData.emitpos = emitpoint;
@@ -37,6 +39,7 @@ public static class LightRayHelper
         lightRayData.lightdiagramindex.AddRange(lightsourceindex);
         lightRayData.lightluminosity = LightLuminosity;
         lightRayData.raydir = lightDir;
+        lightRayData.Color = rayColor;
         Ray2D ray = new Ray2D(emitpoint, lightDir);
         RaycastHit2D raycastHit2D;
         raycastHit2D = Physics2D.Raycast(ray.origin, ray.direction, 100f,1<<7);
@@ -66,6 +69,6 @@ public static class LightRayHelper
 
     public static LightRayData LightEmit(LightRayData lightRayData)
     {
-        return LightEmit(lightRayData.emitObject, lightRayData.raydir, lightRayData.lightdiagramindex, lightRayData.lightluminosity, lightRayData.emitpos);
+        return LightEmit(lightRayData.emitObject, lightRayData.raydir, lightRayData.lightdiagramindex, lightRayData.lightluminosity, lightRayData.emitpos, lightRayData.Color);
     }
 }

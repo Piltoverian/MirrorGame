@@ -38,13 +38,13 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: HoldLayer
+    uniqueID: 1793731389
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
-    uniqueID: 1793731389
-    locked: 0
-  - name: Light
+  - name: Light&BackGround
     uniqueID: 3119836017
     locked: 0
   m_RenderingLayers:

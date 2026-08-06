@@ -18,7 +18,7 @@ public class LightRendererPipeLine : MonoBehaviour
         {
             var lightindexlist= new List<int>();
             lightindexlist.Add(lightSource.GetLightSourceIndex());
-            var lightRayData = LightRayHelper.LightEmit(lightSource.gameObject, lightSource.transform.right,lightindexlist, lightSource.GetLightLuminosity(),lightSource.transform.position);
+            var lightRayData = LightRayHelper.LightEmit(lightSource.gameObject, lightSource.transform.right,lightindexlist, lightSource.GetLightLuminosity(),lightSource.transform.position,lightSource.GetLightSourceColor());
             lightTotalGraph.Add(lightRayData);
         }
         return lightTotalGraph;
@@ -46,6 +46,7 @@ public class LightRendererPipeLine : MonoBehaviour
                 if (lightRayGameObject.TryGetComponent(out LightRay lightRay))
                 {
                     lightRay.SetLuminosity(lightRayData.lightluminosity);
+                    lightRay.SetColor(lightRayData.Color);
                 }
                 lightActiveRayGameObjects.Add(lightRayGameObject);
             }

@@ -4,8 +4,9 @@ using UnityEngine;
 public class LightSource : LightUtility
 {
     [SerializeField] int lightSourceIndex;
-    [SerializeField] float lightLuminosity; 
-    
+    [SerializeField] float lightLuminosity;
+    [SerializeField] Color lightColor; 
+
 
     private void OnValidate()
     {
@@ -36,6 +37,11 @@ public class LightSource : LightUtility
     public float GetLightLuminosity()
     {
         return lightLuminosity;
+    }
+
+    public Color GetLightSourceColor()
+    {
+        return lightColor;
     }
 
     public override void OnLightHit(LightRayData lightRayData)

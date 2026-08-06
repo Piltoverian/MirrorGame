@@ -60,12 +60,16 @@ public class LightSplitter : LightUtility
             hit.Add(lightRayData);
         }
         float lightLuminositySum = 0f;
+        Color ColorSum = Color.black;
         foreach (var rayData in hit)
         {
             lightLuminositySum += rayData.lightluminosity;
+            ColorSum += rayData.Color;
         }
         lightRayData1.lightluminosity = lightLuminositySum * 0.5f;
         lightRayData2.lightluminosity = lightLuminositySum * 0.5f;
+        lightRayData1.Color = ColorSum * 0.5f;
+        lightRayData2.Color = ColorSum * 0.5f;
         lightRayData1=LightRayHelper.LightEmit(lightRayData1);
         lightRayData2=LightRayHelper.LightEmit(lightRayData2);
         var lightRendererPipeLine = FindAnyObjectByType<LightRendererPipeLine>();
