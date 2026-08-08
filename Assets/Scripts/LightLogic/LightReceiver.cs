@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LightReceiver : LightUtility
 {
     private List<LightRayData> hit = new List<LightRayData>();
     [SerializeField] private float lumosityToOpen = 10f;
+    [SerializeField] private Color colorToOpen= Color.white;
+    [SerializeField] private float colorTolerance = 0.1f;
     public override void OnLightGraphClear()
     {
         hit.Clear();
@@ -39,9 +42,21 @@ public class LightReceiver : LightUtility
         return lightLuminositySum;
     }
 
+    public Color GetTotalColor()
+    {
+        Color colorSum = Color.black;
+        foreach (var rayData in hit)
+        {
+            colorSum += rayData.Color;
+        }
+        return colorSum;
+    }
+
     public bool IsOpened()
     {
-        return GetTotalLuminosity() >= lumosityToOpen;
+        Color offsetColor= GetTotalColor() - colorToOpen;
+        bool isColorMatch = Mathf.Abs(offsetColor.r) <= colorTolerance && Mathf.Abs(offsetColor.g) <= colorTolerance && Mathf.Abs(offsetColor.b) <= colorTolerance;
+        return GetTotalLuminosity() >= lumosityToOpen && isColorMatch;
     }
 
     public float GetLumosityToOpen()

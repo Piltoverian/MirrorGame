@@ -9,6 +9,7 @@ public class LightMerger : LightUtility
 
     private bool hasFrontHit = false;
     private bool hasBackHit = false;
+    private bool hasEmitted = false;
 
     public void Awake()
     {
@@ -19,11 +20,12 @@ public class LightMerger : LightUtility
     {
         hit.Clear();
         currentRayData = new LightRayData();
-        currentRayData.emitObject =lightoutput;
+        currentRayData.emitObject = lightoutput;
         currentRayData.lightdiagramindex = new System.Collections.Generic.List<int>();
         currentRayData.lightluminosity = 0f;
         currentRayData.emitpos = lightoutput.transform.position;
         currentRayData.raydir = lightoutput.transform.up;
+        hasEmitted = false;
     }
 
     public override void OnLightGraphClear()
@@ -33,25 +35,17 @@ public class LightMerger : LightUtility
 
     public override void OnLightHit(LightRayData lightRayData)
     {
-
-        for(int i = 0; i < lightRayData.lightdiagramindex.Count; i++)
-        {
-            if (!currentRayData.lightdiagramindex.Contains(lightRayData.lightdiagramindex[i]))
-            {
-                currentRayData.lightdiagramindex.Add(lightRayData.lightdiagramindex[i]);
-            }
-        }
-        bool isNewHit = true;
+        bool foundMatch = false;
         for (int i = 0; i < hit.Count; i++)
         {
-            if (hit[i].emitObject == lightRayData.emitObject && hit[i].emitpos == lightRayData.emitpos && hit[i].raydir == lightRayData.raydir)
+            if (hit[i].emitObject == lightRayData.emitObject)
             {
                 hit[i] = lightRayData;
-                isNewHit = false;
+                foundMatch = true;
                 break;
             }
         }
-        if (isNewHit)
+        if (!foundMatch)
         {
             hit.Add(lightRayData);
         }
@@ -62,19 +56,25 @@ public class LightMerger : LightUtility
             lightLuminositySum += rayData.lightluminosity;
             colorSum += rayData.Color;
         }
-      currentRayData.lightluminosity = lightLuminositySum;
-      currentRayData.Color = colorSum;
-      currentRayData = LightRayHelper.LightEmit(currentRayData);
-      var lightRendererPipeLine = FindAnyObjectByType<LightRendererPipeLine>();
-      if (lightRendererPipeLine != null)
-      {
-              lightRendererPipeLine.UpdateLightGraph(currentRayData);
-      }
-      else
-      {
-              Debug.LogError("No LightRendererPipeLine found in the scene.");
-      }
-    }
 
-    
+        currentRayData.lightluminosity = lightLuminositySum;
+        currentRayData.Color = colorSum;
+
+        if (!hasEmitted)
+        {
+            hasEmitted = true;
+            currentRayData = LightRayHelper.LightEmit(currentRayData.emitObject, currentRayData.raydir, currentRayData.lightdiagramindex, currentRayData.lightluminosity, currentRayData.emitpos, currentRayData.Color);
+        }
+        else
+        {
+            if (currentRayData.visualRay != null)
+            {
+                currentRayData.visualRay.SetColor(colorSum);
+            }
+            if (currentRayData.hitCollider != null && currentRayData.hitCollider.TryGetComponent(out LightUtility nextTarget))
+            {
+                nextTarget.OnLightHit(currentRayData);
+            }
+        }
+    }
 }

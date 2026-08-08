@@ -63,7 +63,7 @@ public class PushableMirror : MonoBehaviour
     [SerializeField] private float snapDelay = 0.2f;
 
     private Rigidbody2D rb;
-    private LightRendererPipeLine pipeline;
+    private LightVisualizer pipeline;
     private float stoppedTimer;
 
     private Color[] originalColors;
@@ -98,7 +98,7 @@ public class PushableMirror : MonoBehaviour
 
     private void Start()
     {
-        pipeline = FindAnyObjectByType<LightRendererPipeLine>();
+        pipeline = FindAnyObjectByType<LightVisualizer>();
         if (snapToGridOnStart)
         {
             SnapToGrid();
