@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class LightSource : LightUtility
 {
-    [SerializeField] int lightSourceIndex;
-    [SerializeField] float lightLuminosity; 
+    [SerializeField] private int lightSourceIndex;
+    [SerializeField] private float lightLuminosity = 10f;
+    [SerializeField] private LightColorChannel lightColor = LightColorChannel.White;
+    [Tooltip("Use <= 0 to inherit the speed configured on LightRendererPipeLine.")]
+    [SerializeField] private float lightSpeedOverride = -1f;
     
 
     private void OnValidate()
@@ -36,6 +39,22 @@ public class LightSource : LightUtility
     public float GetLightLuminosity()
     {
         return lightLuminosity;
+    }
+
+    public LightColorChannel GetLightColor()
+    {
+        return lightColor;
+    }
+
+    public float GetLightSpeed(float fallbackSpeed)
+    {
+        return lightSpeedOverride > 0f ? lightSpeedOverride : fallbackSpeed;
+    }
+
+    public void Configure(LightColorChannel newColor, float newLuminosity)
+    {
+        lightColor = newColor;
+        lightLuminosity = newLuminosity;
     }
 
     public override void OnLightHit(LightRayData lightRayData)

@@ -15,20 +15,31 @@ public class WinningTest : MonoBehaviour
             return;
         }
 
-        LightReceiver[] doors = FindObjectsByType<LightReceiver>(FindObjectsSortMode.None);
+        LightReceiver[] receivers = FindObjectsByType<LightReceiver>();
+        bool foundWinReceiver = false;
 
-        if (doors.Length > 0)
+        if (receivers.Length > 0)
         {
-            foreach (LightReceiver door in doors)
+            foreach (LightReceiver receiver in receivers)
             {
-                if (!door.IsOpened())
+                if (!receiver.CountsForWin())
+                {
+                    continue;
+                }
+
+                foundWinReceiver = true;
+
+                if (!receiver.IsOpened())
                 {
                     return;
                 }
             }
         }
 
-        HandleWin();
+        if (foundWinReceiver)
+        {
+            HandleWin();
+        }
     }
 
     private void HandleWin()

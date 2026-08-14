@@ -6,11 +6,15 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float sprintMoveSpeed = 7f;
     [SerializeField] private float pushMoveSpeed = 2f;
+    [SerializeField, Range(0f, 1f)] private float pushDirectionThreshold = 0.2f;
 
     private PlayerInputActions inputActions;
     private InputAction signAction;
+    private InputAction sprintAction;
     private Vector2 currentMoveInput;
+    private bool isSprinting;
     private Rigidbody2D rb;
 
     private PushableMirror activeMirror;
@@ -45,6 +49,7 @@ public class PlayerController : MonoBehaviour
         };
 
         BindSignAction();
+        BindSprintAction();
     }
 
     private void OnEnable()
@@ -64,6 +69,12 @@ public class PlayerController : MonoBehaviour
             signAction.performed -= OnSignPerformed;
         }
 
+        if (sprintAction != null)
+        {
+            sprintAction.performed -= OnSprintPerformed;
+            sprintAction.canceled -= OnSprintCanceled;
+        }
+
         inputActions?.Dispose();
     }
 
@@ -71,11 +82,22 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 moveDir = currentMoveInput.normalized;
 
-        float currentSpeed = moveSpeed;
+        bool isPushing = IsTryingToPushActiveMirror(moveDir);
+        float currentSpeed = isSprinting ? sprintMoveSpeed : moveSpeed;
 
-        if (activeMirror != null && activeMirror.IsPushable)
+        if (isPushing)
         {
-            currentSpeed = pushMoveSpeed;
+            activeMirror.SetPushControl(moveDir, isSprinting);
+            currentSpeed = activeMirror.GetPlayerPushSpeed(isSprinting);
+        }
+        else if (activeMirror != null)
+        {
+            activeMirror.ClearPushControl();
+
+            if (activeMirror.IsPushable)
+            {
+                currentSpeed = Mathf.Min(currentSpeed, pushMoveSpeed);
+            }
         }
 
         rb.linearVelocity = moveDir * currentSpeed;
@@ -117,6 +139,36 @@ public class PlayerController : MonoBehaviour
         }
 
         signAction.performed += OnSignPerformed;
+    }
+
+    private void BindSprintAction()
+    {
+        InputActionMap playerMap = inputActions.Player.Get();
+
+        sprintAction = playerMap.FindAction("Sprint", false);
+        if (sprintAction == null)
+        {
+            sprintAction = playerMap.FindAction("sprint", false);
+        }
+
+        if (sprintAction == null)
+        {
+            Debug.LogWarning("[PlayerController] Missing Sprint action in Player action map.");
+            return;
+        }
+
+        sprintAction.performed += OnSprintPerformed;
+        sprintAction.canceled += OnSprintCanceled;
+    }
+
+    private void OnSprintPerformed(InputAction.CallbackContext context)
+    {
+        isSprinting = true;
+    }
+
+    private void OnSprintCanceled(InputAction.CallbackContext context)
+    {
+        isSprinting = false;
     }
 
     private void OnSignPerformed(InputAction.CallbackContext context)
@@ -165,6 +217,7 @@ public class PlayerController : MonoBehaviour
 
         if (mirror != null && mirror == activeMirror)
         {
+            activeMirror.ClearPushControl();
             activeMirror = null;
         }
 
@@ -213,5 +266,26 @@ public class PlayerController : MonoBehaviour
         activeRotationZone = zone;
         activeRotationMirror = mirror;
         zone.Highlight(true);
+    }
+
+    private bool IsTryingToPushActiveMirror(Vector2 moveDir)
+    {
+        if (activeMirror == null || moveDir.sqrMagnitude <= 0.0001f || !activeMirror.IsPushable)
+        {
+            return false;
+        }
+
+        if (!activeMirror.CanPushDirection(moveDir))
+        {
+            return false;
+        }
+
+        Vector2 playerToMirror = (Vector2)(activeMirror.transform.position - transform.position);
+        if (playerToMirror.sqrMagnitude <= 0.0001f)
+        {
+            return true;
+        }
+
+        return Vector2.Dot(moveDir, playerToMirror.normalized) >= pushDirectionThreshold;
     }
 }

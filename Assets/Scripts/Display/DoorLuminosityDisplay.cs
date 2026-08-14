@@ -5,19 +5,45 @@ public class DoorLuminosityDisplay : MonoBehaviour
 {
     [SerializeField] private Color openedColor;
     [SerializeField] private Color closedColor;
+    [SerializeField] private bool showCurrentLuminosity = false;
+
+    private TextMeshPro textMesh;
+    private LightReceiver receiver;
+
     private void Start()
     {
-        GetComponent<TextMeshPro>().text = GetComponentInParent<LightReceiver>().GetLumosityToOpen().ToString("F2");
+        textMesh = GetComponent<TextMeshPro>();
+        receiver = GetComponentInParent<LightReceiver>();
+
+        if (receiver != null)
+        {
+            textMesh.text = receiver.GetLumosityToOpen().ToString("F2");
+        }
     }
+
     private void Update()
     {
-        if (GetComponentInParent<LightReceiver>().IsOpened())
+        if (receiver == null || textMesh == null)
         {
-            GetComponent<TextMeshPro>().color = openedColor;
+            return;
+        }
+
+        if (showCurrentLuminosity)
+        {
+            float currentLuminosity = receiver.RequiresSpecificColor()
+                ? receiver.GetMatchingLuminosity()
+                : receiver.GetTotalLuminosity();
+
+            textMesh.text = currentLuminosity.ToString("F1") + "/" + receiver.GetLumosityToOpen().ToString("F1");
+        }
+
+        if (receiver.IsOpened())
+        {
+            textMesh.color = openedColor;
         }
         else
         {
-            GetComponent<TextMeshPro>().color = closedColor;
+            textMesh.color = closedColor;
         }
     }
 }

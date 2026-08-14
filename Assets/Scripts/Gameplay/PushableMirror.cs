@@ -31,6 +31,12 @@ public class PushableMirror : MonoBehaviour
     [SerializeField] private float mirrorMass = 8f;
     [SerializeField] private float linearDamping = 8f;
     [SerializeField] private float maxPushSpeed = 1.6f;
+    [SerializeField] private float pushSpeed = 1.4f;
+    [SerializeField] private float sprintPushSpeed = 3f;
+    [SerializeField] private float pushAcceleration = 6f;
+    [SerializeField] private float sprintPushAcceleration = 10f;
+    [SerializeField] private float pushDeceleration = 12f;
+    [SerializeField] private bool canSprintPush = true;
 
     [Header("Rotation")]
     [SerializeField] private float mirrorSign = 22.5f;
@@ -65,11 +71,15 @@ public class PushableMirror : MonoBehaviour
     private Rigidbody2D rb;
     private LightRendererPipeLine pipeline;
     private float stoppedTimer;
+    private float currentPushSpeed;
+    private bool pushControlActive;
+    private bool sprintPushRequested;
 
     private Color[] originalColors;
 
     public bool IsPushable => isPushable;
     public bool IsRotationable => isRotationable;
+    public bool CanSprintPush => canSprintPush;
     public static bool GlobalSignsVisible => globalSignsVisible;
 
     private void Awake()
@@ -131,9 +141,12 @@ public class PushableMirror : MonoBehaviour
         {
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
+            currentPushSpeed = 0f;
+            pushControlActive = false;
             return;
         }
 
+        UpdatePushSpeedLimit();
         LimitPushSpeed();
 
         if (snapToGridWhenStopped)
@@ -432,9 +445,16 @@ public class PushableMirror : MonoBehaviour
     {
         if (rb == null) return;
 
-        if (rb.linearVelocity.magnitude > maxPushSpeed)
+        float effectiveMaxPushSpeed = Mathf.Max(maxPushSpeed, currentPushSpeed);
+
+        if (effectiveMaxPushSpeed <= 0f)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxPushSpeed;
+            return;
+        }
+
+        if (rb.linearVelocity.magnitude > effectiveMaxPushSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * effectiveMaxPushSpeed;
         }
     }
 
@@ -586,6 +606,73 @@ public class PushableMirror : MonoBehaviour
     public void Push(Vector3 direction)
     {
         Debug.LogWarning($"{name}: Push() is deprecated. Mirror is now pushed by Rigidbody2D physics.");
+    }
+
+    public void SetPushControl(Vector2 direction, bool sprinting)
+    {
+        if (!CanPushDirection(direction))
+        {
+            ClearPushControl();
+            return;
+        }
+
+        pushControlActive = direction.sqrMagnitude > 0.0001f;
+        sprintPushRequested = sprinting && canSprintPush;
+    }
+
+    public void ClearPushControl()
+    {
+        pushControlActive = false;
+        sprintPushRequested = false;
+    }
+
+    public bool CanPushDirection(Vector2 direction)
+    {
+        if (!isPushable || direction.sqrMagnitude <= 0.0001f)
+        {
+            return false;
+        }
+
+        Vector2 normalizedDirection = direction.normalized;
+
+        if (Mathf.Abs(normalizedDirection.x) >= Mathf.Abs(normalizedDirection.y))
+        {
+            return isHorizontalPushable;
+        }
+
+        return isVerticalPushable;
+    }
+
+    public float GetPlayerPushSpeed(bool sprinting)
+    {
+        float targetSpeed = sprinting && canSprintPush ? sprintPushSpeed : pushSpeed;
+        float minimumContactSpeed = Mathf.Max(0.05f, pushSpeed * 0.5f);
+        return Mathf.Clamp(Mathf.Max(currentPushSpeed, minimumContactSpeed), 0f, targetSpeed);
+    }
+
+    private void UpdatePushSpeedLimit()
+    {
+        float targetSpeed = 0f;
+        float acceleration = pushDeceleration;
+
+        if (pushControlActive)
+        {
+            targetSpeed = sprintPushRequested ? sprintPushSpeed : pushSpeed;
+            acceleration = currentPushSpeed < targetSpeed
+                ? (sprintPushRequested ? sprintPushAcceleration : pushAcceleration)
+                : pushDeceleration;
+        }
+
+        currentPushSpeed = Mathf.MoveTowards(
+            currentPushSpeed,
+            targetSpeed,
+            Mathf.Max(0f, acceleration) * Time.fixedDeltaTime
+        );
+
+        if (!pushControlActive && rb != null && currentPushSpeed <= stoppedVelocityThreshold)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 
     private void SnapToGrid()

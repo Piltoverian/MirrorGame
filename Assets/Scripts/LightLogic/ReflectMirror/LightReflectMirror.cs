@@ -15,6 +15,7 @@ public class LightReflectMirror : LightUtility
     [SerializeField] private float angleTolerance = 1f;
     [SerializeField] private float posTolerance = 0.1f;
     [SerializeField] private int maxBounces = 5;
+    [SerializeField] private float reflectionDelay = 0.05f;
 
     public override void OnLightHit(LightRayData lightRayData)
     {
@@ -55,7 +56,16 @@ public class LightReflectMirror : LightUtility
             allChildren[i].gameObject.layer = 2; 
         }
 
-        var lightdata = LightRayHelper.LightEmit(gameObject, CalculateReflectDir(lightRayData), lightRayData.lightdiagramindex, lightRayData.lightluminosity,lightRayData.hitpos);
+        var lightdata = LightRayHelper.LightEmit(
+            gameObject,
+            reflectDir,
+            lightRayData.lightdiagramindex,
+            lightRayData.lightluminosity,
+            lightRayData.hitpos,
+            lightRayData.lightColor,
+            lightRayData.lightSpeed,
+            lightRayData.GetEndDelay() + reflectionDelay
+        );
 
         for (int i = 0; i < allChildren.Length; i++)
         {

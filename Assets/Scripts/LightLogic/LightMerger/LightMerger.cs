@@ -5,6 +5,10 @@ public class LightMerger : LightUtility
 {
     [SerializeField] private GameObject lightoutput;
     [SerializeField] private LightRayData currentRayData;
+    [SerializeField] private bool mergeColorChannels = true;
+    [SerializeField] private int minimumInputRays = 2;
+    [SerializeField] private float mergeDelay = 0f;
+
     private List<LightRayData> hit = new List<LightRayData>();
 
     private bool hasFrontHit = false;
@@ -19,11 +23,12 @@ public class LightMerger : LightUtility
     {
         hit.Clear();
         currentRayData = new LightRayData();
-        currentRayData.emitObject =lightoutput;
+        currentRayData.emitObject = GetOutputObject();
         currentRayData.lightdiagramindex = new System.Collections.Generic.List<int>();
         currentRayData.lightluminosity = 0f;
-        currentRayData.emitpos = lightoutput.transform.position;
-        currentRayData.raydir = lightoutput.transform.up;
+        currentRayData.lightColor = LightColorChannel.None;
+        currentRayData.emitpos = GetOutputPosition();
+        currentRayData.raydir = GetOutputDirection();
     }
 
     public override void OnLightGraphClear()
@@ -55,12 +60,28 @@ public class LightMerger : LightUtility
         {
             hit.Add(lightRayData);
         }
+
+        if (hit.Count < Mathf.Max(1, minimumInputRays))
+        {
+            return;
+        }
+
         float lightLuminositySum = 0f;
+        float latestInputEndDelay = 0f;
+
         foreach (var rayData in hit)
         {
             lightLuminositySum += rayData.lightluminosity;
+            latestInputEndDelay = Mathf.Max(latestInputEndDelay, rayData.GetEndDelay());
         }
+
+      currentRayData.emitObject = GetOutputObject();
+      currentRayData.emitpos = GetOutputPosition();
+      currentRayData.raydir = GetOutputDirection();
       currentRayData.lightluminosity = lightLuminositySum;
+      currentRayData.lightColor = mergeColorChannels ? LightColorHelper.Merge(hit) : lightRayData.lightColor;
+      currentRayData.lightSpeed = lightRayData.lightSpeed;
+      currentRayData.pathDelay = latestInputEndDelay + mergeDelay;
       currentRayData = LightRayHelper.LightEmit(currentRayData);
       var lightRendererPipeLine = FindAnyObjectByType<LightRendererPipeLine>();
       if (lightRendererPipeLine != null)
@@ -73,5 +94,19 @@ public class LightMerger : LightUtility
       }
     }
 
+    private GameObject GetOutputObject()
+    {
+        return lightoutput != null ? lightoutput : gameObject;
+    }
+
+    private Vector3 GetOutputPosition()
+    {
+        return lightoutput != null ? lightoutput.transform.position : transform.position;
+    }
+
+    private Vector3 GetOutputDirection()
+    {
+        return lightoutput != null ? lightoutput.transform.up : transform.up;
+    }
     
 }
