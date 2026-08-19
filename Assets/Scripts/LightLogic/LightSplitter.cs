@@ -1,15 +1,15 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class LightSplitter : LightUtility
 {
     [SerializeField] private GameObject lightoutput;
     [SerializeField] private float splitAngle = 30f;
-    [SerializeField]private List<LightRayData> hit=new List<LightRayData>();
+    [SerializeField] private List<LightRayData> hit = new List<LightRayData>();
     LightRayData lightRayData1;
     LightRayData lightRayData2;
+    private bool hasEmitted = false;
+
     public void Awake()
     {
         ClearRayData();
@@ -18,8 +18,8 @@ public class LightSplitter : LightUtility
     public void ClearRayData()
     {
         hit.Clear();
-        lightRayData1 =new LightRayData();
-        lightRayData2=new LightRayData();
+        lightRayData1 = new LightRayData();
+        lightRayData2 = new LightRayData();
         lightRayData1.emitObject = lightoutput;
         lightRayData1.emitpos = lightoutput.transform.position;
         lightRayData1.lightdiagramindex = new System.Collections.Generic.List<int>();
@@ -28,6 +28,7 @@ public class LightSplitter : LightUtility
         lightRayData2.emitpos = lightoutput.transform.position;
         lightRayData2.lightdiagramindex = new System.Collections.Generic.List<int>();
         lightRayData2.raydir = Quaternion.Euler(0, 0, -splitAngle) * lightoutput.transform.up;
+        hasEmitted = false;
     }
 
     public override void OnLightGraphClear()
@@ -37,46 +38,62 @@ public class LightSplitter : LightUtility
 
     public override void OnLightHit(LightRayData lightRayData)
     {
-        for (int i = 0; i < lightRayData.lightdiagramindex.Count; i++)
-        {
-            if (!lightRayData1.lightdiagramindex.Contains(lightRayData.lightdiagramindex[i]))
-            {
-                lightRayData1.lightdiagramindex.Add(lightRayData.lightdiagramindex[i]);
-                lightRayData2.lightdiagramindex.Add(lightRayData.lightdiagramindex[i]);
-            }
-        }
-        bool isNewHit = true;
+        bool foundMatch = false;
         for (int i = 0; i < hit.Count; i++)
         {
-            if (hit[i].emitObject == lightRayData.emitObject && hit[i].emitpos == lightRayData.emitpos && hit[i].raydir == lightRayData.raydir)
+            if (hit[i].emitObject == lightRayData.emitObject)
             {
                 hit[i] = lightRayData;
-                isNewHit = false;
+                foundMatch = true;
                 break;
             }
         }
-        if (isNewHit)
+        if (!foundMatch)
         {
             hit.Add(lightRayData);
         }
+
         float lightLuminositySum = 0f;
+        Color ColorSum = Color.black;
         foreach (var rayData in hit)
         {
             lightLuminositySum += rayData.lightluminosity;
+            ColorSum += rayData.Color;
         }
+
         lightRayData1.lightluminosity = lightLuminositySum * 0.5f;
         lightRayData2.lightluminosity = lightLuminositySum * 0.5f;
-        lightRayData1=LightRayHelper.LightEmit(lightRayData1);
-        lightRayData2=LightRayHelper.LightEmit(lightRayData2);
-        var lightRendererPipeLine = FindAnyObjectByType<LightRendererPipeLine>();
-        if (lightRendererPipeLine != null)
+        lightRayData1.Color = ColorSum * 0.5f;
+        lightRayData2.Color = ColorSum * 0.5f;
+
+        if (!hasEmitted)
         {
-            lightRendererPipeLine.UpdateLightGraph(lightRayData1);
-            lightRendererPipeLine.UpdateLightGraph(lightRayData2);
+            hasEmitted = true;
+            lightRayData1 = LightRayHelper.LightEmit(lightRayData1.emitObject, lightRayData1.raydir, lightRayData1.lightdiagramindex, lightRayData1.lightluminosity, lightRayData1.emitpos, lightRayData1.Color);
+            lightRayData2 = LightRayHelper.LightEmit(lightRayData2.emitObject, lightRayData2.raydir, lightRayData2.lightdiagramindex, lightRayData2.lightluminosity, lightRayData2.emitpos, lightRayData2.Color);
         }
         else
         {
-            Debug.LogError("No LightRendererPipeLine found in the scene.");
+            if (lightRayData1.visualRay != null)
+            {
+                lightRayData1.visualRay.SetColor(lightRayData1.Color);
+                lightRayData1.visualRay.SetLuminosity(lightRayData1.lightluminosity);
+            }
+
+
+            if (lightRayData2.visualRay != null)
+            {
+                lightRayData2.visualRay.SetLuminosity(lightRayData2.lightluminosity);
+                lightRayData2.visualRay.SetColor(lightRayData2.Color);
+            }
+            if (lightRayData1.hitCollider != null && lightRayData1.hitCollider.TryGetComponent(out LightUtility nextTarget1))
+            {
+                nextTarget1.OnLightHit(lightRayData1);
+            }
+            if (lightRayData2.hitCollider != null && lightRayData2.hitCollider.TryGetComponent(out LightUtility nextTarget2))
+            {
+                nextTarget2.OnLightHit(lightRayData2);
+            }
         }
     }
 }

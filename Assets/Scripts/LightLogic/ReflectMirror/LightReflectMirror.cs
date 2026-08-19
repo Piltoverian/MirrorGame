@@ -7,6 +7,8 @@ public class LightReflectMirror : LightUtility
     {
         public Vector2 position;
         public Vector3 direction;
+        public LightRayData outgoingData;
+        public Color incomingColor;
     }
 
     private List<EmittedRay> currentEmittedRays = new List<EmittedRay>();
@@ -14,21 +16,19 @@ public class LightReflectMirror : LightUtility
     [Header("Anti-Loop Settings")]
     [SerializeField] private float angleTolerance = 1f;
     [SerializeField] private float posTolerance = 0.1f;
-    [SerializeField] private int maxBounces = 5;
+    [SerializeField] private int maxBounces = 5; // Có thể giữ lại nhưng cách map dưới đây đã chống lặp khá tốt
 
     public override void OnLightHit(LightRayData lightRayData)
     {
-
         if (Vector3.Dot(lightRayData.raydir, transform.up) > 0.01f)
         {
             return;
         }
 
         Vector3 reflectDir = CalculateReflectDir(lightRayData);
-
         Vector2 reflectPos = lightRayData.hitpos;
 
-        int sameRayCount = 0;
+        // KIỂM TRA TIA ĐÃ PHẢN XẠ CHƯA
         for (int i = 0; i < currentEmittedRays.Count; i++)
         {
             float posDiff = Vector2.Distance(currentEmittedRays[i].position, reflectPos);
@@ -36,17 +36,31 @@ public class LightReflectMirror : LightUtility
 
             if (posDiff <= posTolerance && angleDiff <= angleTolerance)
             {
-                sameRayCount++;
+                // Tia này đã từng được phản xạ! Giờ chỉ việc truyền màu mới (Instant Color Update)
+                EmittedRay emitted = currentEmittedRays[i];
+                if (emitted.incomingColor != lightRayData.Color)
+                {
+                    emitted.incomingColor = lightRayData.Color;
+                    emitted.outgoingData.Color = lightRayData.Color;
+                    
+                    if (emitted.outgoingData.visualRay != null)
+                    {
+                        emitted.outgoingData.visualRay.SetColor(lightRayData.Color);
+                        emitted.outgoingData.visualRay.SetLuminosity(lightRayData.lightluminosity);
+                    }
+                    currentEmittedRays[i] = emitted; // Cập nhật lại mảng
+
+                    // Gõ cửa đầu bên kia bắt đổi màu theo
+                    if (emitted.outgoingData.hitCollider != null && emitted.outgoingData.hitCollider.TryGetComponent(out LightUtility nextTarget))
+                    {
+                        nextTarget.OnLightHit(emitted.outgoingData);
+                    }
+                }
+                return; // Thoát luôn, không mọc tia mới!
             }
         }
 
-        if (sameRayCount >= maxBounces)
-        {
-            return;
-        }
-
-        currentEmittedRays.Add(new EmittedRay { position = reflectPos, direction = reflectDir });
-
+        // TIA CHƯA PHẢN XẠ BAO GIỜ -> MỌC TIA MỚI
         Transform[] allChildren = GetComponentsInChildren<Transform>(true);
         int[] oldLayers = new int[allChildren.Length];
         for (int i = 0; i < allChildren.Length; i++)
@@ -55,7 +69,7 @@ public class LightReflectMirror : LightUtility
             allChildren[i].gameObject.layer = 2; 
         }
 
-        var lightdata = LightRayHelper.LightEmit(gameObject, CalculateReflectDir(lightRayData), lightRayData.lightdiagramindex, lightRayData.lightluminosity,lightRayData.hitpos);
+        var lightdata = LightRayHelper.LightEmit(gameObject, reflectDir, lightRayData.lightdiagramindex, lightRayData.lightluminosity, lightRayData.hitpos, lightRayData.Color);
 
         for (int i = 0; i < allChildren.Length; i++)
         {
@@ -64,19 +78,8 @@ public class LightReflectMirror : LightUtility
 
         if (lightdata != null)
         {
-            LightRendererPipeLine lightRendererPipeLine = FindAnyObjectByType<LightRendererPipeLine>();
-            if (lightRendererPipeLine != null)
-            {
-                lightRendererPipeLine.AddAnEdgeToLightGraph(lightdata);
-            }
-            else
-            {
-                Debug.LogError("No LightRendererPipeLine found in the scene.");
-            }
-        }
-        else
-        {
-            Debug.LogError("Failed to emit reflected light ray.");
+            // Lưu lại để lần sau chỉ update màu
+            currentEmittedRays.Add(new EmittedRay { position = reflectPos, direction = reflectDir, outgoingData = lightdata, incomingColor = lightRayData.Color });
         }
     }
 
@@ -84,10 +87,8 @@ public class LightReflectMirror : LightUtility
     {
         if (incomingRay.hitCollider == null)
         {
-            Debug.LogError("Incoming ray does not hit any collider.");
             return Vector3.zero;
         }
-        // Calculate the reflection direction using the formula: R = D - 2 * (D . N) * N
         Vector3 normal = transform.up;
         return incomingRay.raydir - 2 * Vector3.Dot(incomingRay.raydir, normal) * normal;
     }
@@ -97,4 +98,3 @@ public class LightReflectMirror : LightUtility
         currentEmittedRays.Clear();
     }
 }
-

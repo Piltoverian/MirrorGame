@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4064177815971198491}
   - component: {fileID: 4153080925866272330}
   - component: {fileID: 1386121942804962882}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LuminosityDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8836696222574918103}
   - component: {fileID: 8188961796350131889}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5778355540461849622}
   - component: {fileID: 2038457222877408659}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LightSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
