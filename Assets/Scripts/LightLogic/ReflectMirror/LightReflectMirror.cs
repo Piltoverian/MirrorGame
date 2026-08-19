@@ -46,6 +46,7 @@ public class LightReflectMirror : LightUtility
                     if (emitted.outgoingData.visualRay != null)
                     {
                         emitted.outgoingData.visualRay.SetColor(lightRayData.Color);
+                        emitted.outgoingData.visualRay.SetLuminosity(lightRayData.lightluminosity);
                     }
                     currentEmittedRays[i] = emitted; // Cập nhật lại mảng
 

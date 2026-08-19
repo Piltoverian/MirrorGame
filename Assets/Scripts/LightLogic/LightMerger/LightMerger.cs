@@ -70,6 +70,7 @@ public class LightMerger : LightUtility
             if (currentRayData.visualRay != null)
             {
                 currentRayData.visualRay.SetColor(colorSum);
+                currentRayData.visualRay.SetLuminosity(lightLuminositySum);
             }
             if (currentRayData.hitCollider != null && currentRayData.hitCollider.TryGetComponent(out LightUtility nextTarget))
             {

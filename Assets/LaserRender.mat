@@ -83,7 +83,7 @@ Material:
     - _Light: 0
     - _Light_Amplification: 10000
     - _Luminosity: 1
-    - _LuminosityAmp: 10
+    - _LuminosityAmp: 5
     - _MaxLuminosity: 9.71
     - _QueueControl: 0
     - _QueueOffset: 0

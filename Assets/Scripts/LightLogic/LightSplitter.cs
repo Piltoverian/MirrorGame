@@ -75,10 +75,17 @@ public class LightSplitter : LightUtility
         else
         {
             if (lightRayData1.visualRay != null)
+            {
                 lightRayData1.visualRay.SetColor(lightRayData1.Color);
-            if (lightRayData2.visualRay != null)
-                lightRayData2.visualRay.SetColor(lightRayData2.Color);
+                lightRayData1.visualRay.SetLuminosity(lightRayData1.lightluminosity);
+            }
 
+
+            if (lightRayData2.visualRay != null)
+            {
+                lightRayData2.visualRay.SetLuminosity(lightRayData2.lightluminosity);
+                lightRayData2.visualRay.SetColor(lightRayData2.Color);
+            }
             if (lightRayData1.hitCollider != null && lightRayData1.hitCollider.TryGetComponent(out LightUtility nextTarget1))
             {
                 nextTarget1.OnLightHit(lightRayData1);

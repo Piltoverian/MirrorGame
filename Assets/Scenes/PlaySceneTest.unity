@@ -920,7 +920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2038457222877408659, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: lightColor.b
-      value: 0.561
+      value: 0.071
       objectReference: {fileID: 0}
     - target: {fileID: 2038457222877408659, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: lightColor.g
@@ -928,15 +928,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2038457222877408659, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: lightColor.r
-      value: 1
+      value: 0.071
       objectReference: {fileID: 0}
     - target: {fileID: 2038457222877408659, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: lightLuminosity
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2038457222877408659, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: lightSourceIndex
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5778355540461849622, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1343,19 +1343,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2038457222877408659, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: lightColor.b
-      value: 0.561
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2038457222877408659, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: lightColor.g
-      value: 1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2038457222877408659, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: lightColor.r
-      value: 1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2038457222877408659, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: lightLuminosity
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2038457222877408659, guid: 46e10a61a7c8dd24e9c8b27525cfd4e2, type: 3}
       propertyPath: lightSourceIndex
